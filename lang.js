@@ -14,7 +14,9 @@ const i18n = {
     'hero.pre':          'Güvenilir Yazılım Ortağınız',
     'hero.btn.projects': 'Projeleri Gör',
     'hero.btn.talk':     'Konuşalım',
+    'hero.desc':         '<strong>Yazılım & Dijital Çözümler</strong> — Kurumsal sistemler, web uygulamaları ve otomasyon alanında uzmanlaşmış ekibimizle çalışıyoruz.<br/><br/>İhtiyacın belirlenmesinden yayına alınmasına kadar, uçtan uca modern ve güvenilir yazılım çözümleri sunuyoruz.',
     'card.status':  'Yeni proje alıyoruz',
+    'card.handle':  '@goniceon.dev · yazılım ekibi',
     'card.label':   'Ne yapıyoruz?',
     'card.svc1':    'Web Uygulamaları & Admin Panelleri',
     'card.svc2':    'Discord & WhatsApp Botları',
@@ -31,6 +33,8 @@ const i18n = {
     'stats.areas':       'Hizmet Alanı',
     // About
     'about.tag':         'Hakkımızda',
+    'about.h2.pre':      'Güvenilir bir',
+    'about.h2.grad':     'yazılım ekibi.',
     'about.num1':        'yıl deneyim',
     'about.num2':        'tamamlanan proje',
     'about.num3':        'satır kod',
@@ -42,6 +46,8 @@ const i18n = {
     'about.skills.tag':  'Uzmanlık Seviyeleri',
     // Team
     'team.tag':      'Ekibimiz',
+    'team.h2.pre':   'Projenizi birlikte',
+    'team.h2.grad':  'yürüten ekip.',
     'team.sm.role':  'Kurucu & Baş Geliştirici',
     'team.sm.desc':  'Python ve AI tabanlı sistemler, Supabase mimarisi ve kurumsal proje yönetiminde 5+ yıl deneyim.',
     'team.au.role':  'Frontend Geliştirici',
@@ -52,6 +58,7 @@ const i18n = {
     'team.bs.desc':  'Discord, WhatsApp ve üçüncü taraf API entegrasyonları; otomasyon akışları ve bot altyapıları konusunda uzman.',
     // Services
     'svc.tag':           'Hizmetler',
+    'svc.h2.pre':        'Neler yapıyoruz',
     'svc.sub':           'Şablon çözüm yok. Her ihtiyaç farklıdır — ekibimiz projenize özel çalışır.',
     'svc.web.badge':     'Popüler',
     'svc.web.h3':        'Web Uygulaması',
@@ -89,7 +96,11 @@ const i18n = {
     'svc.wa.li3':        'Toplu mesaj & CRM entegrasyonu',
     // Projects
     'proj.tag':           'Projeler',
+    'proj.h2.pre':        'Gerçek projeler,',
+    'proj.h2.grad':       'gerçek sonuçlar.',
     'proj.medek.type':    'Kurumsal SaaS',
+    'proj.medek.sub':     'Süreç Yönetim Sistemi',
+    'proj.medek.impact':  '<strong>Her dönem 50+ sayfalık</strong> manuel doldurmayı 15 dakikaya indirdik.',
     'proj.medek.h3':      'MEDEK — Süreç Yönetim & Sınav Analiz Sistemi',
     'proj.medek.p':       'Meslek yüksekokulları için Bologna veri çekimi, soru bazlı not girişi ve otomatik MEDEK raporlama sistemi.',
     'proj.medek.li1':     'Otomatik Bologna veri çekimi',
@@ -97,6 +108,8 @@ const i18n = {
     'proj.medek.li3':     'Otomatik MEDEK raporu üretimi',
     'proj.medek.li4':     'Rol bazlı erişim kontrolü',
     'proj.kafe.type':     'Restoran Yazılımı',
+    'proj.kafe.sub':      'Dijital Menü Sistemi',
+    'proj.kafe.impact':   'Kağıt menüyü kaldırdık. <strong>QR tara, menüyü gör</strong> — Türkçe veya İngilizce.',
     'proj.kafe.h3':       'Kafe QR — Dijital Menü & Yönetim Sistemi',
     'proj.kafe.p':        'Kafeler için QR tabanlı dijital menü. Gerçek zamanlı güncelleme, çift dil desteği ve admin paneli.',
     'proj.kafe.li1':      'QR kod ile anında erişim',
@@ -104,6 +117,7 @@ const i18n = {
     'proj.kafe.li3':      'Gerçek zamanlı ürün güncelleme',
     'proj.kafe.li4':      'Görsel medya yönetimi',
     'proj.guard.type':    'Yapay Zeka',
+    'proj.guard.sub':     'AI Güvenlik Sistemi',
     'proj.guard.h3':      'AutoGuard — Otonom AI Güvenlik Sistemi',
     'proj.guard.dev':     'Aktif geliştirme aşamasındadır — yeni özellikler ekleniyor',
     'proj.guard.p':       'RTX 5070 Ti tabanlı güvenlik kamerası sistemi. YOLO ile gerçek zamanlı tespit, otomatik kayıt.',
@@ -155,7 +169,9 @@ const i18n = {
     'hero.pre':          'Your Reliable Software Partner',
     'hero.btn.projects': 'View Projects',
     'hero.btn.talk':     'Let\'s Talk',
+    'hero.desc':         '<strong>Software & Digital Solutions</strong> — We work with a specialized team in enterprise systems, web applications, and automation.<br/><br/>From requirement analysis to deployment — end-to-end, modern and reliable software solutions.',
     'card.status':  'Accepting new projects',
+    'card.handle':  '@goniceon.dev · software team',
     'card.label':   'What we do?',
     'card.svc1':    'Web Apps & Admin Panels',
     'card.svc2':    'Discord & WhatsApp Bots',
@@ -172,6 +188,8 @@ const i18n = {
     'stats.areas':       'Service Areas',
     // About
     'about.tag':         'About Us',
+    'about.h2.pre':      'A reliable',
+    'about.h2.grad':     'software team.',
     'about.num1':        'years experience',
     'about.num2':        'completed projects',
     'about.num3':        'lines of code',
@@ -183,6 +201,8 @@ const i18n = {
     'about.skills.tag':  'Expertise Levels',
     // Team
     'team.tag':      'Our Team',
+    'team.h2.pre':   'The team driving',
+    'team.h2.grad':  'your projects forward.',
     'team.sm.role':  'Founder & Lead Developer',
     'team.sm.desc':  'Python and AI-based systems, Supabase architecture, and enterprise project management with 5+ years of experience.',
     'team.au.role':  'Frontend Developer',
@@ -193,6 +213,7 @@ const i18n = {
     'team.bs.desc':  'Expert in Discord, WhatsApp, and third-party API integrations; automation flows and bot infrastructure.',
     // Services
     'svc.tag':           'Services',
+    'svc.h2.pre':        'What we do',
     'svc.sub':           'No templates. Every need is different — our team works tailored to your project.',
     'svc.web.badge':     'Popular',
     'svc.web.h3':        'Web Application',
@@ -230,7 +251,11 @@ const i18n = {
     'svc.wa.li3':        'Bulk messaging & CRM integration',
     // Projects
     'proj.tag':           'Projects',
+    'proj.h2.pre':        'Real projects,',
+    'proj.h2.grad':       'real results.',
     'proj.medek.type':    'Enterprise SaaS',
+    'proj.medek.sub':     'Process Management System',
+    'proj.medek.impact':  '<strong>50+ pages of manual work</strong> reduced to 15 minutes each term.',
     'proj.medek.h3':      'MEDEK — Process Management & Exam Analysis System',
     'proj.medek.p':       'Bologna data fetching, question-based grade entry, and automated MEDEK report generation for vocational schools.',
     'proj.medek.li1':     'Automated Bologna data fetch',
@@ -238,6 +263,8 @@ const i18n = {
     'proj.medek.li3':     'Automated MEDEK report generation',
     'proj.medek.li4':     'Role-based access control',
     'proj.kafe.type':     'Restaurant Software',
+    'proj.kafe.sub':      'Digital Menu System',
+    'proj.kafe.impact':   'We replaced paper menus. <strong>Scan QR, see the menu</strong> — in Turkish or English.',
     'proj.kafe.h3':       'Kafe QR — Digital Menu & Management System',
     'proj.kafe.p':        'QR-based digital menu for cafes. Real-time updates, dual language support, and admin panel.',
     'proj.kafe.li1':      'Instant access via QR code',
@@ -245,6 +272,7 @@ const i18n = {
     'proj.kafe.li3':      'Real-time product updates',
     'proj.kafe.li4':      'Visual media management',
     'proj.guard.type':    'Artificial Intelligence',
+    'proj.guard.sub':     'AI Security System',
     'proj.guard.h3':      'AutoGuard — Autonomous AI Security System',
     'proj.guard.dev':     'Active development — new features being added',
     'proj.guard.p':       'RTX 5070 Ti based security camera system. Real-time detection with YOLO, automatic recording.',
@@ -300,6 +328,12 @@ function applyLang(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
     if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  // html elements (data-i18n-html uses innerHTML)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18nHtml;
+    if (t[key] !== undefined) el.innerHTML = t[key];
   });
 
   // placeholder elements
