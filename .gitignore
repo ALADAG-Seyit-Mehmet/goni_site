@@ -1,0 +1,10 @@
+# Supabase CLI binary
+supabase.exe
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp

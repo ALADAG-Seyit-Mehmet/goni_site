@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>GONICEON — CMS</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #09080F;
+      --bg2: #0D0C18;
+      --card: #100F1E;
+      --card2: #161528;
+      --mint: #1EFFC2;
+      --violet: #BF5AF2;
+      --coral: #FF6B35;
+      --amber: #F0B429;
+      --green: #34D399;
+      --red: #EF4444;
+      --t1: #EEEEF5;
+      --t2: #7070A0;
+      --t3: #3A3A55;
+      --t4: #1C1C30;
+      --border: rgba(255, 255, 255, .055);
+      --b-mint: rgba(30, 255, 194, .2);
+      --r: 12px;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --t: .3s var(--ease);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      font-size: 16px
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--t1);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    /* ── Login Screen ── */
+    #login-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #login-screen.hidden {
+      display: none
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 380px;
+      padding: 40px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--mint), var(--violet))
+    }
+
+    .login-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: -1px
+    }
+
+    .login-logo span {
+      color: var(--mint)
+    }
+
+    .login-logo-dot {
+      color: var(--violet)
+    }
+
+    .login-sub {
+      color: var(--t3);
+      font-size: .8rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 32px
+    }
+
+    .login-label {
+      display: block;
+      font-size: .65rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--t3);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 6px
+    }
+
+    .login-input {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 14px;
+      color: var(--t1);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .9rem;
+      outline: none;
+      transition: var(--t);
+      margin-bottom: 14px;
+    }
+
+    .login-input:focus {
+      border-color: var(--mint);
+      box-shadow: 0 0 0 3px rgba(30, 255, 194, .08)
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--mint);
+      color: #09080F;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--t);
+    }
+
+    .login-btn:hover {
+      background: #00eab4;
+      box-shadow: 0 0 28px rgba(30, 255, 194, .3)
+    }
+
+    .login-err {
+      color: var(--red);
+      font-size: .78rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 10px;
+      display: none
+    }
+
+    /* ── Dashboard Layout ── */
+    #dashboard {
+      display: none
+    }
+
+    #dashboard.visible {
+      display: flex
+    }
+
+    .sidebar {
+      width: 220px;
+      min-height: 100vh;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sb-brand {
+      padding: 22px 20px 16px;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .sb-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.5px
+    }
+
+    .sb-logo span {
+      color: var(--mint)
+    }
+
+    .sb-tag {
+      font-size: .6rem;
+      color: var(--t3);
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 2px;
+      letter-spacing: .08em
+    }
+
+    .sb-nav {
+      flex: 1;
+      padding: 14px 10px
+    }
+
+    .sb-section {
+      font-size: .56rem;
+      font-weight: 700;
+      color: var(--t4);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: 0 10px;
+      margin: 16px 0 6px
+    }
+
+    .sb-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: 8px;
+      color: var(--t2);
+      font-size: .82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--t);
+      margin-bottom: 2px;
+    }
+
+    .sb-item:hover,
+    .sb-item.active {
+      background: rgba(30, 255, 194, .07);
+      color: var(--mint)
+    }
+
+    .sb-item .sb-icon {
+      font-size: .95rem;
+      width: 18px;
+      text-align: center
+    }
+
+    .sb-foot {
+      padding: 14px 20px;
+      border-top: 1px solid var(--border)
+    }
+
+    .sb-user {
+      font-size: .72rem;
+      color: var(--t3);
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    .sb-user strong {
+      color: var(--t2);
+      display: block;
+      margin-bottom: 2px
+    }
+
+    .sb-logout {
+      font-size: .72rem;
+      color: var(--red);
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 6px;
+      transition: opacity .2s
+    }
+
+    .sb-logout:hover {
+      opacity: .7
+    }
+
+    /* ── Main Content ── */
+    .main {
+      flex: 1;
+      overflow-y: auto
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(9, 8, 15, .8);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .top-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -.3px
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .badge-live {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(52, 211, 153, .08);
+      border: 1px solid rgba(52, 211, 153, .18);
+      border-radius: 99px;
+      padding: 4px 10px;
+      font-size: .65rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--green)
+    }
+
+    .live-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pd 1.8s infinite
+    }
+
+    @keyframes pd {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(52, 211, 153, .5)
+      }
+
+      60% {
+        box-shadow: 0 0 0 5px rgba(52, 211, 153, 0)
+      }
+    }
+
+    .content {
+      padding: 28px
+    }
+
+    .td-stack {
+      font-size: .72rem;
+      color: var(--t3)
+    }
+
+    .form-hidden {
+      display: none
+    }
+
+    /* ── Pages ── */
+    .page {
+      display: none
+    }
+
+    .page.active {
+      display: block
+    }
+
+    /* Cards row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px
+    }
+
+    .kpi {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .kpi::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px
+    }
+
+    .kpi-mint::after {
+      background: var(--mint)
+    }
+
+    .kpi-violet::after {
+      background: var(--violet)
+    }
+
+    .kpi-coral::after {
+      background: var(--coral)
+    }
+
+    .kpi-amber::after {
+      background: var(--amber)
+    }
+
+    .kpi-label {
+      font-size: .62rem;
+      color: var(--t3);
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 8px
+    }
+
+    .kpi-val {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1;
+      letter-spacing: -1px
+    }
+
+    .kpi-mint .kpi-val {
+      color: var(--mint)
+    }
+
+    .kpi-violet .kpi-val {
+      color: var(--violet)
+    }
+
+    .kpi-coral .kpi-val {
+      color: var(--coral)
+    }
+
+    .kpi-amber .kpi-val {
+      color: var(--amber)
+    }
+
+    .kpi-sub {
+      font-size: .7rem;
+      color: var(--t3);
+      margin-top: 4px
+    }
+
+    /* Section heading */
+    .sec-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px
+    }
+
+    .sec-head h2 {
+      font-size: .95rem;
+      font-weight: 700;
+      letter-spacing: -.2px
+    }
+
+    .add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(30, 255, 194, .1);
+      border: 1px solid var(--b-mint);
+      color: var(--mint);
+      border-radius: 99px;
+      padding: 5px 14px;
+      font-size: .75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--t);
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    .add-btn:hover {
+      background: var(--mint);
+      color: #09080F
+    }
+
+    /* Table */
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 24px
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse
+    }
+
+    thead tr {
+      background: rgba(255, 255, 255, .02);
+      border-bottom: 1px solid var(--border)
+    }
+
+    th {
+      padding: 10px 16px;
+      text-align: left;
+      font-size: .63rem;
+      font-weight: 700;
+      color: var(--t3);
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: .1em
+    }
+
+    td {
+      padding: 12px 16px;
+      font-size: .83rem;
+      color: var(--t2);
+      border-bottom: 1px solid rgba(255, 255, 255, .03)
+    }
+
+    tr:last-child td {
+      border-bottom: none
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, .015)
+    }
+
+    td strong {
+      color: var(--t1)
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: .65rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    .tag-done {
+      background: rgba(52, 211, 153, .1);
+      color: var(--green);
+      border: 1px solid rgba(52, 211, 153, .2)
+    }
+
+    .tag-wip {
+      background: rgba(240, 180, 41, .08);
+      color: var(--amber);
+      border: 1px solid rgba(240, 180, 41, .2)
+    }
+
+    .tag-plan {
+      background: rgba(191, 90, 242, .08);
+      color: var(--violet);
+      border: 1px solid rgba(191, 90, 242, .2)
+    }
+
+    .act-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--t3);
+      border-radius: 5px;
+      padding: 3px 9px;
+      font-size: .68rem;
+      cursor: pointer;
+      transition: var(--t);
+      font-family: 'JetBrains Mono', monospace
+    }
+
+    .act-btn:hover {
+      border-color: var(--mint);
+      color: var(--mint)
+    }
+
+    /* Form panel */
+    .form-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+      margin-bottom: 16px
+    }
+
+    .form-card h3 {
+      font-size: .9rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      letter-spacing: -.2px
+    }
+
+    .fg {
+      margin-bottom: 14px
+    }
+
+    .fg label {
+      display: block;
+      font-size: .62rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--t3);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 5px
+    }
+
+    .fg input,
+    .fg select,
+    .fg textarea {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 10px 12px;
+      color: var(--t1);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .88rem;
+      outline: none;
+      transition: var(--t);
+      resize: vertical
+    }
+
+    .fg input:focus,
+    .fg select:focus,
+    .fg textarea:focus {
+      border-color: var(--mint);
+      box-shadow: 0 0 0 3px rgba(30, 255, 194, .07)
+    }
+
+    .save-btn {
+      background: var(--mint);
+      color: #09080F;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 24px;
+      font-weight: 700;
+      font-size: .88rem;
+      cursor: pointer;
+      transition: var(--t);
+      font-family: 'Space Grotesk', sans-serif
+    }
+
+    .save-btn:hover {
+      background: #00eab4
+    }
+
+    /* Log */
+    .log-list {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden
+    }
+
+    .log-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, .03);
+      font-size: .8rem
+    }
+
+    .log-item:last-child {
+      border-bottom: none
+    }
+
+    .log-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .65rem;
+      color: var(--t3);
+      min-width: 80px;
+      margin-top: 1px
+    }
+
+    .log-msg {
+      color: var(--t2);
+      flex: 1
+    }
+
+    .log-msg strong {
+      color: var(--t1)
+    }
+
+    .log-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px
+    }
+
+    .ld-mint {
+      background: var(--mint)
+    }
+
+    .ld-violet {
+      background: var(--violet)
+    }
+
+    .ld-amber {
+      background: var(--amber)
+    }
+
+    /* Notification toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--card);
+      border: 1px solid var(--b-mint);
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: .82rem;
+      color: var(--mint);
+      font-family: 'JetBrains Mono', monospace;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all .35s var(--ease);
+      z-index: 9999
+    }
+
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1
+    }
+
+    @media(max-width:768px) {
+      .sidebar {
+        display: none
+      }
+
+      .kpi-row {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Login ── -->
+  <div id="login-screen">
+    <div class="login-box">
+      <div class="login-logo"><span>G</span>ONICEON<span class="login-logo-dot">.</span></div>
+      <div class="login-sub">// cms — yetkili erişim</div>
+      <label class="login-label" for="lpass">Şifre</label>
+      <input class="login-input" type="password" id="lpass" placeholder="••••••••" autocomplete="current-password" />
+      <button class="login-btn" id="login-btn">Giriş Yap</button>
+      <div class="login-err" id="login-err">⛔ Hatalı şifre.</div>
+    </div>
+  </div>
+
+  <!-- ── Dashboard ── -->
+  <div id="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sb-brand">
+        <div class="sb-logo"><span>G</span>ONICEON CMS</div>
+        <div class="sb-tag">// v2.0 · yönetim paneli</div>
+      </div>
+      <nav class="sb-nav">
+        <div class="sb-section">Genel</div>
+        <div class="sb-item active" data-page="overview"><span class="sb-icon">📊</span> Genel Bakış</div>
+        <div class="sb-item" data-page="projects"><span class="sb-icon">🗂</span> Projeler</div>
+        <div class="sb-item" data-page="services"><span class="sb-icon">⚙️</span> Hizmetler</div>
+        <div class="sb-section">İçerik</div>
+        <div class="sb-item" data-page="about"><span class="sb-icon">👤</span> Hakkımızda</div>
+        <div class="sb-item" data-page="messages"><span class="sb-icon">✉️</span> Gelen Mesajlar</div>
+        <div class="sb-section">Sistem</div>
+        <div class="sb-item" data-page="logs"><span class="sb-icon">📋</span> Aktivite Log</div>
+      </nav>
+      <div class="sb-foot">
+        <div class="sb-user"><strong>Seyit Mehmet Aladağ</strong>@goniceon.dev · admin</div>
+        <div class="sb-logout" id="logout-btn">⬡ Çıkış Yap</div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <div class="top-bar">
+        <div class="top-title mono" id="page-title">Genel Bakış</div>
+        <div class="top-right">
+          <div class="badge-live"><span class="live-dot"></span>Site Aktif</div>
+        </div>
+      </div>
+      <div class="content">
+
+        <!-- ── PAGE: Overview ── -->
+        <div class="page active" id="page-overview">
+          <div class="kpi-row">
+            <div class="kpi kpi-mint">
+              <div class="kpi-label">Tamamlanan Proje</div>
+              <div class="kpi-val">10+</div>
+              <div class="kpi-sub">Son: Kafe QR</div>
+            </div>
+            <div class="kpi kpi-violet">
+              <div class="kpi-label">Aktif Hizmet</div>
+              <div class="kpi-val">7</div>
+              <div class="kpi-sub">Listede gösterilen</div>
+            </div>
+            <div class="kpi kpi-coral">
+              <div class="kpi-label">Geliştirilen</div>
+              <div class="kpi-val">1</div>
+              <div class="kpi-sub">AutoGuard AI</div>
+            </div>
+            <div class="kpi kpi-amber">
+              <div class="kpi-label">Yıl Deneyim</div>
+              <div class="kpi-val">5+</div>
+              <div class="kpi-sub">2020'den beri</div>
+            </div>
+          </div>
+
+          <div class="sec-head">
+            <h2>Son Aktivite</h2>
+          </div>
+          <div class="log-list">
+            <div class="log-item">
+              <div class="log-dot ld-mint"></div>
+              <div class="log-time" id="lt1">az önce</div>
+              <div class="log-msg"><strong>CMS</strong> — Panele giriş yapıldı.</div>
+            </div>
+            <div class="log-item">
+              <div class="log-dot ld-violet"></div>
+              <div class="log-time">bugün</div>
+              <div class="log-msg"><strong>Site</strong> — v4 Ruhlu Tasarım yayınlandı.</div>
+            </div>
+            <div class="log-item">
+              <div class="log-dot ld-amber"></div>
+              <div class="log-time">dün</div>
+              <div class="log-msg"><strong>AutoGuard</strong> — Aktif geliştirme sürüyor.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── PAGE: Projects ── -->
+        <div class="page" id="page-projects">
+          <div class="sec-head">
+            <h2>Proje Listesi</h2>
+            <button class="add-btn" id="new-proj-btn">+ Yeni Proje</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Proje Adı</th>
+                  <th>Tür</th>
+                  <th>Durum</th>
+                  <th>Stack</th>
+                  <th>İşlem</th>
+                </tr>
+              </thead>
+              <tbody id="proj-table">
+                <tr>
+                  <td class="mono">01</td>
+                  <td><strong>MEDEK</strong></td>
+                  <td>Kurumsal SaaS</td>
+                  <td><span class="tag tag-done">Tamamlandı</span></td>
+                  <td class="mono td-stack">Python · Supabase</td>
+                  <td><button class="act-btn" onclick="editProj(0)">Düzenle</button></td>
+                </tr>
+                <tr>
+                  <td class="mono">02</td>
+                  <td><strong>Kafe QR</strong></td>
+                  <td>Restoran</td>
+                  <td><span class="tag tag-done">Tamamlandı</span></td>
+                  <td class="mono td-stack">HTML · Supabase</td>
+                  <td><button class="act-btn" onclick="editProj(1)">Düzenle</button></td>
+                </tr>
+                <tr>
+                  <td class="mono">03</td>
+                  <td><strong>AutoGuard AI</strong></td>
+                  <td>Yapay Zeka</td>
+                  <td><span class="tag tag-wip">Geliştiriliyor</span></td>
+                  <td class="mono td-stack">Python · YOLO</td>
+                  <td><button class="act-btn" onclick="editProj(2)">Düzenle</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Edit form (hidden by default) -->
+          <div class="form-card form-hidden" id="proj-form">
+            <h3>✏️ Proje Düzenle</h3>
+            <div class="fg"><label>Proje Adı</label><input type="text" id="pf-name" /></div>
+            <div class="fg"><label>Tür</label><input type="text" id="pf-type" /></div>
+            <div class="fg"><label>Durum</label>
+              <select id="pf-status">
+                <option value="done">Tamamlandı</option>
+                <option value="wip">Geliştiriliyor</option>
+                <option value="plan">Planlanıyor</option>
+              </select>
+            </div>
+            <div class="fg"><label>Stack (virgülle)</label><input type="text" id="pf-stack" /></div>
+            <div class="fg"><label>Kısa Açıklama</label><textarea id="pf-desc" rows="3"></textarea></div>
+            <button class="save-btn" onclick="saveProj()">Kaydet</button>
+          </div>
+        </div>
+
+        <!-- ── PAGE: Services ── -->
+        <div class="page" id="page-services">
+          <div class="sec-head">
+            <h2>Hizmet Listesi</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hizmet</th>
+                  <th>Durum</th>
+                  <th>Görünürlük</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Web Uygulaması</strong></td>
+                  <td><span class="tag tag-done">Aktif</span></td>
+                  <td><span class="tag tag-done">Gösteriliyor</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Discord Bot</strong></td>
+                  <td><span class="tag tag-done">Aktif</span></td>
+                  <td><span class="tag tag-done">Gösteriliyor</span></td>
+                </tr>
+                <tr>
+                  <td><strong>WhatsApp Botu</strong></td>
+                  <td><span class="tag tag-done">Aktif</span></td>
+                  <td><span class="tag tag-done">Gösteriliyor</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Yapay Zeka</strong></td>
+                  <td><span class="tag tag-done">Aktif</span></td>
+                  <td><span class="tag tag-done">Gösteriliyor</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Kurumsal Yazılım</strong></td>
+                  <td><span class="tag tag-done">Aktif</span></td>
+                  <td><span class="tag tag-done">Gösteriliyor</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Dijital Menü &amp; QR</strong></td>
+                  <td><span class="tag tag-done">Aktif</span></td>
+                  <td><span class="tag tag-done">Gösteriliyor</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Teknik Danışmanlık</strong></td>
+                  <td><span class="tag tag-wip">Kısıtlı</span></td>
+                  <td><span class="tag tag-done">Gösteriliyor</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── PAGE: About ── -->
+        <div class="page" id="page-about">
+          <div class="form-card">
+            <h3>👤 Hakkımda Metni</h3>
+            <div class="fg"><label>Ad Soyad</label><input type="text" value="Seyit Mehmet Aladağ" /></div>
+            <div class="fg"><label>Unvan / Başlık</label><input type="text"
+                value="yazılım geliştirici · tek kişilik ekip" /></div>
+            <div class="fg"><label>Kısa Bio (1. Paragraf)</label><textarea
+                rows="3">Müşterimle görüşür, sistemi tasarlar, kodlar, deploy eder ve desteğini de ben veririm. Üçüncü kişi yok, aradaki yönetici yok.</textarea>
+            </div>
+            <div class="fg"><label>Tecrübe (Yıl)</label><input type="number" value="3" /></div>
+            <div class="fg"><label>Lokasyon</label><input type="text" value="Türkiye · Uzaktan Çalışma" /></div>
+            <button class="save-btn" onclick="toast('Hakkımda güncellendi ✓')">Kaydet</button>
+          </div>
+        </div>
+
+        <!-- ── PAGE: Messages ── -->
+        <div class="page" id="page-messages">
+          <div class="sec-head">
+            <h2>Gelen Mesajlar</h2>
+            <div id="msg-count" style="font-size:.75rem;color:var(--t3);font-family:'JetBrains Mono',monospace"></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tarih</th>
+                  <th>Ad Soyad</th>
+                  <th>E-Posta</th>
+                  <th>Konu</th>
+                  <th>Mesaj</th>
+                </tr>
+              </thead>
+              <tbody id="msg-table">
+                <tr>
+                  <td colspan="5"
+                    style="text-align:center;color:var(--t3);padding:32px;font-family:'JetBrains Mono',monospace;font-size:.78rem">
+                    Supabase bağlantısı kurulduğunda mesajlar burada görünecek.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── PAGE: Logs ── -->
+        <div class="page" id="page-logs">
+          <div class="sec-head">
+            <h2>Aktivite Günlüğü</h2>
+          </div>
+          <div class="log-list" id="full-logs">
+            <div class="log-item">
+              <div class="log-dot ld-mint"></div>
+              <div class="log-time" id="lt2">az önce</div>
+              <div class="log-msg"><strong>CMS</strong> — Panele giriş yapıldı.</div>
+            </div>
+            <div class="log-item">
+              <div class="log-dot ld-violet"></div>
+              <div class="log-time">2 sa önce</div>
+              <div class="log-msg"><strong>Site</strong> — CSS inline stiller temizlendi.</div>
+            </div>
+            <div class="log-item">
+              <div class="log-dot ld-violet"></div>
+              <div class="log-time">3 sa önce</div>
+              <div class="log-msg"><strong>Site</strong> — Custom cursor kaldırıldı.</div>
+            </div>
+            <div class="log-item">
+              <div class="log-dot ld-amber"></div>
+              <div class="log-time">dün</div>
+              <div class="log-msg"><strong>AutoGuard</strong> — Aktif geliştirme devam ediyor.</div>
+            </div>
+            <div class="log-item">
+              <div class="log-dot ld-mint"></div>
+              <div class="log-time">21 Nis</div>
+              <div class="log-msg"><strong>Site</strong> — v4 Ruhlu Tasarım deploy edildi.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    // ── Config ──
+    // Şifreyi değiştirmek için aşağıdaki satırı düzenle:
+    const PASS = 'SmA.2009';
+    // Supabase config — proje oluşturulduktan sonra doldurun:
+    const SUPABASE_URL = 'https://qrzonjuhyyempcyeulhf.supabase.co';
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyem9uanVoeXllbXBjeWV1bGhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NDE1NzgsImV4cCI6MjA5MjUxNzU3OH0.8SZjA75YjrGeNHV5x9Sks4xUj9yIwpYXYzBy14B2zW4';
+
+    // ── Login ──
+    const loginScreen = document.getElementById('login-screen');
+    const dashboard = document.getElementById('dashboard');
+
+    function tryLogin() {
+      const val = document.getElementById('lpass').value;
+      if (val === PASS) {
+        loginScreen.classList.add('hidden');
+        dashboard.classList.add('visible');
+        sessionStorage.setItem('goni_auth', '1');
+        logTime();
+      } else {
+        document.getElementById('login-err').style.display = 'block';
+        document.getElementById('lpass').style.borderColor = 'var(--red)';
+        setTimeout(() => { document.getElementById('lpass').style.borderColor = ''; }, 1500);
+      }
+    }
+
+    document.getElementById('login-btn').addEventListener('click', tryLogin);
+    document.getElementById('lpass').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+
+    // Auto-login if session active
+    if (sessionStorage.getItem('goni_auth') === '1') {
+      loginScreen.classList.add('hidden');
+      dashboard.classList.add('visible');
+    }
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      sessionStorage.removeItem('goni_auth');
+      loginScreen.classList.remove('hidden');
+      dashboard.classList.remove('visible');
+      document.getElementById('lpass').value = '';
+      document.getElementById('login-err').style.display = 'none';
+    });
+
+    // ── Sidebar Navigation ──
+    const titles = {
+      overview: 'Genel Bakış', projects: 'Projeler', services: 'Hizmetler',
+      about: 'Hakkımızda', messages: 'Gelen Mesajlar', logs: 'Aktivite Log'
+    };
+    document.querySelectorAll('.sb-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const pg = item.dataset.page;
+        document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        item.classList.add('active');
+        document.getElementById('page-' + pg).classList.add('active');
+        document.getElementById('page-title').textContent = titles[pg] || pg;
+      });
+    });
+
+    // ── Projects ──
+    const projData = [
+      { name: 'MEDEK', type: 'Kurumsal SaaS', status: 'done', stack: 'Python, Supabase, PostgreSQL', desc: 'Meslek yüksekokulları için Bologna ve MEDEK rapor sistemi.' },
+      { name: 'Kafe QR', type: 'Restoran Yazılımı', status: 'done', stack: 'HTML/CSS/JS, Supabase', desc: 'QR tabanlı dijital menü, çift dil, admin paneli.' },
+      { name: 'AutoGuard AI', type: 'Yapay Zeka', status: 'wip', stack: 'Python, YOLO, TensorRT', desc: 'RTX 5070 Ti optimizeli güvenlik kamerası sistemi.' },
+    ];
+    let editingIdx = -1;
+
+    function editProj(i) {
+      editingIdx = i;
+      const p = projData[i];
+      document.getElementById('pf-name').value = p.name;
+      document.getElementById('pf-type').value = p.type;
+      document.getElementById('pf-status').value = p.status;
+      document.getElementById('pf-stack').value = p.stack;
+      document.getElementById('pf-desc').value = p.desc;
+      document.getElementById('proj-form').classList.remove('form-hidden');
+      document.getElementById('proj-form').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.getElementById('new-proj-btn').addEventListener('click', () => {
+      editingIdx = -1;
+      ['pf-name', 'pf-type', 'pf-stack', 'pf-desc'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('pf-status').value = 'plan';
+      document.getElementById('proj-form').classList.remove('form-hidden');
+      document.getElementById('proj-form').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    function saveProj() {
+      const obj = {
+        name: document.getElementById('pf-name').value,
+        type: document.getElementById('pf-type').value,
+        status: document.getElementById('pf-status').value,
+        stack: document.getElementById('pf-stack').value,
+        desc: document.getElementById('pf-desc').value,
+      };
+      if (editingIdx >= 0) projData[editingIdx] = obj; else projData.push(obj);
+      renderProjTable();
+      document.getElementById('proj-form').classList.add('form-hidden');
+      toast('Proje kaydedildi ✓');
+    }
+
+    function renderProjTable() {
+      const tbody = document.getElementById('proj-table');
+      const tagMap = { done: 'tag-done', wip: 'tag-wip', plan: 'tag-plan' };
+      const lblMap = { done: 'Tamamlandı', wip: 'Geliştiriliyor', plan: 'Planlanıyor' };
+      tbody.innerHTML = projData.map((p, i) => `
+      <tr>
+        <td class="mono">${String(i + 1).padStart(2, '0')}</td>
+        <td><strong>${p.name}</strong></td>
+        <td>${p.type}</td>
+        <td><span class="tag ${tagMap[p.status]}">${lblMap[p.status]}</span></td>
+        <td class="mono" style="font-size:.72rem;color:var(--t3)">${p.stack}</td>
+        <td><button class="act-btn" onclick="editProj(${i})">Düzenle</button></td>
+      </tr>`).join('');
+    }
+
+    // ── Toast ──
+    function toast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ── Time ──
+    function logTime() {
+      const now = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+      document.querySelectorAll('[id^="lt"]').forEach(el => el.textContent = now);
+    }
+
+    // ── Disable devtools on this page too ──
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.key === 'F12') { e.preventDefault(); return; }
+      if (e.ctrlKey && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) { e.preventDefault(); return; }
+      if (e.ctrlKey && ['U', 'u'].includes(e.key)) { e.preventDefault(); return; }
+    });
+  </script>
+</body>
+
+</html>

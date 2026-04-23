@@ -1,0 +1,322 @@
+// ════════════════════════════════════════
+// GONICEON — i18n Language Switch
+// ════════════════════════════════════════
+const i18n = {
+  tr: {
+    // Nav
+    'nav.about':    'Hakkımızda',
+    'nav.services': 'Hizmetler',
+    'nav.projects': 'Projeler',
+    'nav.contact':  'İletişim',
+    // Hero
+    'hero.tag':          'GONICEON — Yazılım & Dijital Çözümler',
+    'hero.available':    'proje alıyoruz',
+    'hero.pre':          'Güvenilir Yazılım Ortağınız',
+    'hero.btn.projects': 'Projeleri Gör',
+    'hero.btn.talk':     'Konuşalım',
+    'card.status':  'Yeni proje alıyoruz',
+    'card.label':   'Ne yapıyoruz?',
+    'card.svc1':    'Web Uygulamaları & Admin Panelleri',
+    'card.svc2':    'Discord & WhatsApp Botları',
+    'card.svc3':    'Kurumsal Yazılımlar',
+    'card.svc4':    'Yapay Zeka Entegrasyonları',
+    'card.stat1':   'Teslim edilen proje',
+    'card.stat2':   'Yanıt süresi',
+    'card.stat3':   'Yıl deneyim',
+    // Stats strip
+    'stats.projects':    'Tamamlanan Proje',
+    'stats.satisfaction':'Müşteri Memnuniyeti',
+    'stats.response':    'Yanıt Süresi',
+    'stats.support':     'Teknik Destek',
+    'stats.areas':       'Hizmet Alanı',
+    // About
+    'about.tag':         'Hakkımızda',
+    'about.num1':        'yıl deneyim',
+    'about.num2':        'tamamlanan proje',
+    'about.num3':        'satır kod',
+    'about.p1':          'Projelerin teknik süreçlerini baştan sona üstleniyor; analiz, mimari tasarım, geliştirme ve yayınlama aşamalarını uzman ekibimizle yönetiyoruz.',
+    'about.p2':          'Her projede bir proje sorumlusu, bir geliştirici ve bir kalite kontrol süreciyle çalışıyoruz — net iletişim, şeffaf ilerleme ve zamanında teslimat.',
+    'about.p3':          'Amacımız sadece çalışan bir yazılım teslim etmek değil; iş akışlarınızı hızlandıran, performanslı ve uzun vadeli sürdürülebilir dijital ürünler ortaya koymak.',
+    'about.focus.title': 'Odak Alanlarımız',
+    'about.focus.desc':  'Yüksek performanslı web uygulamaları, kurumsal yazılımlar ve otonom sistemler üzerine uzmanlaşmış ekibimizle çalışıyoruz. Modern mimariler ve sürdürülebilir altyapılar kuruyoruz.',
+    'about.skills.tag':  'Uzmanlık Seviyeleri',
+    // Team
+    'team.tag':      'Ekibimiz',
+    'team.sm.role':  'Kurucu & Baş Geliştirici',
+    'team.sm.desc':  'Python ve AI tabanlı sistemler, Supabase mimarisi ve kurumsal proje yönetiminde 5+ yıl deneyim.',
+    'team.au.role':  'Frontend Geliştirici',
+    'team.au.name':  'Arayüz & UX Ekibi',
+    'team.au.desc':  'Modern web arayüzleri, admin panelleri ve kullanıcı deneyimi odaklı tasarım ile geliştirme süreçlerini üstleniyor.',
+    'team.bs.role':  'Otomasyon & Entegrasyon',
+    'team.bs.name':  'Bot & Sistem Ekibi',
+    'team.bs.desc':  'Discord, WhatsApp ve üçüncü taraf API entegrasyonları; otomasyon akışları ve bot altyapıları konusunda uzman.',
+    // Services
+    'svc.tag':           'Hizmetler',
+    'svc.sub':           'Şablon çözüm yok. Her ihtiyaç farklıdır — ekibimiz projenize özel çalışır.',
+    'svc.web.badge':     'Popüler',
+    'svc.web.h3':        'Web Uygulaması',
+    'svc.web.p':         'Admin paneli, SaaS, müşteri portalı — hangisi gerekiyorsa onu yapıyoruz. Supabase + vanilla HTML/JS veya tam bir backend.',
+    'svc.web.li1':       'Supabase + RLS ile güvenli backend',
+    'svc.web.li2':       'Admin paneli & müşteri portalı',
+    'svc.web.li3':       'Gerçek zamanlı veri güncelleme',
+    'svc.discord.h3':    'Discord Bot',
+    'svc.discord.p':     'Basit komuttan tam otomasyon sistemine kadar. Sunucunuza özel komutlar, moderasyon ve AI entegrasyonu.',
+    'svc.discord.li1':   'Özel komut sistemi',
+    'svc.discord.li2':   'Otomatik moderasyon',
+    'svc.discord.li3':   'Rol yönetimi & bildirimler',
+    'svc.discord.li4':   'AI sohbet entegrasyonu',
+    'svc.ai.h3':         'Yapay Zeka',
+    'svc.ai.p':          'YOLO nesne tespiti, GPT sohbet botu veya veri tabanlı tahmin modeli. YZ\'yi projenize entegre ediyoruz.',
+    'svc.ai.li1':        'Nesne tespiti (YOLO/TensorRT)',
+    'svc.ai.li2':        'AI destekli karar destek',
+    'svc.saas.badge':    'Kurumsal',
+    'svc.saas.h3':       'Kurumsal Yazılım',
+    'svc.saas.p':        'Kendi yazılımınız olsun mu? Anlık raporlar, süreç yönetimi, kullanıcı yetkilendirme.',
+    'svc.saas.li1':      'Süreç otomasyonu & raporlama',
+    'svc.saas.li2':      'Rol bazlı erişim kontrolü (RLS)',
+    'svc.data.h3':       'Veri & Analiz',
+    'svc.data.p':        'PostgreSQL + Supabase ile güvenli veri altyapısı. Ham veriyi rapor ve grafiğe dönüştürüyoruz.',
+    'svc.data.li1':      'Veritabanı tasarımı & RLS',
+    'svc.data.li2':      'Otomatik raporlama',
+    'svc.qr.h3':         'Dijital Menü & QR',
+    'svc.qr.p':          'Restoran ve kafe için QR menü sistemi. Türkçe/İngilizce, gerçek zamanlı güncelleme, admin paneli dahil.',
+    'svc.qr.li1':        'QR kod entegrasyonu',
+    'svc.qr.li2':        'Çift dil (TR/EN) desteği',
+    'svc.wa.h3':         'WhatsApp Botu',
+    'svc.wa.p':          'Müşterileriniz sizi WhatsApp\'tan arıyor — sipariş takibi, randevu, bildirim, hepsi otomatik.',
+    'svc.wa.li1':        '7/24 otomatik yanıt sistemi',
+    'svc.wa.li2':        'Sipariş & randevu yönetimi',
+    'svc.wa.li3':        'Toplu mesaj & CRM entegrasyonu',
+    // Projects
+    'proj.tag':           'Projeler',
+    'proj.medek.type':    'Kurumsal SaaS',
+    'proj.medek.h3':      'MEDEK — Süreç Yönetim & Sınav Analiz Sistemi',
+    'proj.medek.p':       'Meslek yüksekokulları için Bologna veri çekimi, soru bazlı not girişi ve otomatik MEDEK raporlama sistemi.',
+    'proj.medek.li1':     'Otomatik Bologna veri çekimi',
+    'proj.medek.li2':     'Soru bazlı not girişi',
+    'proj.medek.li3':     'Otomatik MEDEK raporu üretimi',
+    'proj.medek.li4':     'Rol bazlı erişim kontrolü',
+    'proj.kafe.type':     'Restoran Yazılımı',
+    'proj.kafe.h3':       'Kafe QR — Dijital Menü & Yönetim Sistemi',
+    'proj.kafe.p':        'Kafeler için QR tabanlı dijital menü. Gerçek zamanlı güncelleme, çift dil desteği ve admin paneli.',
+    'proj.kafe.li1':      'QR kod ile anında erişim',
+    'proj.kafe.li2':      'Çift dil desteği (TR/EN)',
+    'proj.kafe.li3':      'Gerçek zamanlı ürün güncelleme',
+    'proj.kafe.li4':      'Görsel medya yönetimi',
+    'proj.guard.type':    'Yapay Zeka',
+    'proj.guard.h3':      'AutoGuard — Otonom AI Güvenlik Sistemi',
+    'proj.guard.dev':     'Aktif geliştirme aşamasındadır — yeni özellikler ekleniyor',
+    'proj.guard.p':       'RTX 5070 Ti tabanlı güvenlik kamerası sistemi. YOLO ile gerçek zamanlı tespit, otomatik kayıt.',
+    'proj.guard.li1':     'Gerçek zamanlı nesne tespiti',
+    'proj.guard.li2':     'GPU optimizasyonu (RTX 5070 Ti)',
+    'proj.guard.li3':     'Otomatik olay video kaydı',
+    'proj.guard.li4':     'AI tehdit analizi (geliştiriliyor)',
+    'proj.wip':           '🚧 Aktif Geliştirme',
+    // Contact
+    'contact.tag':        'İletişim',
+    'contact.sub':        'Büyük veya küçük, net veya belirsiz — bir fikriniz varsa, ekibimiz dinler ve yönlendirir.',
+    'contact.phone.lbl':  'Telefon',
+    'contact.phone.note': 'Aramanız için müsaitiz',
+    'contact.email.lbl':  'E-Posta',
+    'contact.email.note': '24 saat içinde yanıt veririz',
+    'contact.avail.title':'Yeni Proje Alıyoruz',
+    'contact.avail.sub':  'Ekibimiz yeni projeler & iş birlikleri için hazır',
+    'form.h3':            'Bize Yazın',
+    'form.name.lbl':      'Adınız',
+    'form.email.lbl':     'E-Posta',
+    'form.subject.lbl':   'Konu',
+    'form.msg.lbl':       'Mesajınız',
+    'form.btn':           'Gönder',
+    'form.success':       '✅ Mesajınızı aldık! Ekibimiz en kısa sürede dönüş yapacak.',
+    'form.ph.name':       'Adınız Soyadınız',
+    'form.ph.email':      'ornek@email.com',
+    'form.ph.msg':        'Ne yapmak istiyorsunuz? Kısaca anlatın...',
+    'form.opt.default':   'Konu Seçin',
+    'form.opt.web':       'Web Uygulaması',
+    'form.opt.corp':      'Kurumsal Yazılım',
+    'form.opt.ai':        'Yapay Zeka Projesi',
+    'form.opt.discord':   'Discord Botu',
+    'form.opt.wa':        'WhatsApp Botu',
+    'form.opt.other':     'Diğer',
+    // Footer
+    'footer.tagline':     '// yazılım ekibi · dijital çözümler',
+    'footer.copy':        '© 2026 GONICEON · Tüm hakları saklıdır',
+  },
+
+  en: {
+    // Nav
+    'nav.about':    'About',
+    'nav.services': 'Services',
+    'nav.projects': 'Projects',
+    'nav.contact':  'Contact',
+    // Hero
+    'hero.tag':          'GONICEON — Software & Digital Solutions',
+    'hero.available':    'accepting projects',
+    'hero.pre':          'Your Reliable Software Partner',
+    'hero.btn.projects': 'View Projects',
+    'hero.btn.talk':     'Let\'s Talk',
+    'card.status':  'Accepting new projects',
+    'card.label':   'What we do?',
+    'card.svc1':    'Web Apps & Admin Panels',
+    'card.svc2':    'Discord & WhatsApp Bots',
+    'card.svc3':    'Enterprise Software',
+    'card.svc4':    'AI Integrations',
+    'card.stat1':   'Delivered projects',
+    'card.stat2':   'Response time',
+    'card.stat3':   'Years experience',
+    // Stats strip
+    'stats.projects':    'Completed Projects',
+    'stats.satisfaction':'Client Satisfaction',
+    'stats.response':    'Response Time',
+    'stats.support':     'Technical Support',
+    'stats.areas':       'Service Areas',
+    // About
+    'about.tag':         'About Us',
+    'about.num1':        'years experience',
+    'about.num2':        'completed projects',
+    'about.num3':        'lines of code',
+    'about.p1':          'We handle the entire technical process from start to finish — analysis, architecture, development, and deployment managed by our expert team.',
+    'about.p2':          'Every project has a dedicated project lead, developer, and QA process — clear communication, transparent progress, on-time delivery.',
+    'about.p3':          'Our goal is not just to deliver working software, but to build high-performance, sustainable digital products that accelerate your workflows.',
+    'about.focus.title': 'Our Focus Areas',
+    'about.focus.desc':  'We work with a specialized team in high-performance web apps, enterprise software, and autonomous systems. We build modern architectures and sustainable infrastructure.',
+    'about.skills.tag':  'Expertise Levels',
+    // Team
+    'team.tag':      'Our Team',
+    'team.sm.role':  'Founder & Lead Developer',
+    'team.sm.desc':  'Python and AI-based systems, Supabase architecture, and enterprise project management with 5+ years of experience.',
+    'team.au.role':  'Frontend Developer',
+    'team.au.name':  'UI & UX Team',
+    'team.au.desc':  'Specializes in modern web interfaces, admin panels, and user-centered design and development processes.',
+    'team.bs.role':  'Automation & Integration',
+    'team.bs.name':  'Bot & Systems Team',
+    'team.bs.desc':  'Expert in Discord, WhatsApp, and third-party API integrations; automation flows and bot infrastructure.',
+    // Services
+    'svc.tag':           'Services',
+    'svc.sub':           'No templates. Every need is different — our team works tailored to your project.',
+    'svc.web.badge':     'Popular',
+    'svc.web.h3':        'Web Application',
+    'svc.web.p':         'Admin panel, SaaS, client portal — whatever you need, we build it. Supabase + vanilla HTML/JS or a full backend.',
+    'svc.web.li1':       'Secure backend with Supabase + RLS',
+    'svc.web.li2':       'Admin panel & client portal',
+    'svc.web.li3':       'Real-time data updates',
+    'svc.discord.h3':    'Discord Bot',
+    'svc.discord.p':     'From simple commands to full automation. Custom commands, moderation, and AI integration for your server.',
+    'svc.discord.li1':   'Custom command system',
+    'svc.discord.li2':   'Automated moderation',
+    'svc.discord.li3':   'Role management & notifications',
+    'svc.discord.li4':   'AI chat integration',
+    'svc.ai.h3':         'Artificial Intelligence',
+    'svc.ai.p':          'YOLO object detection, GPT chatbot, or data-driven prediction models. We integrate AI into your project.',
+    'svc.ai.li1':        'Object detection (YOLO/TensorRT)',
+    'svc.ai.li2':        'AI-powered decision support',
+    'svc.saas.badge':    'Enterprise',
+    'svc.saas.h3':       'Enterprise Software',
+    'svc.saas.p':        'Want your own software? Real-time reports, process management, user authorization — built for your industry.',
+    'svc.saas.li1':      'Process automation & reporting',
+    'svc.saas.li2':      'Role-based access control (RLS)',
+    'svc.data.h3':       'Data & Analytics',
+    'svc.data.p':        'Secure data infrastructure with PostgreSQL + Supabase. We transform raw data into reports and charts.',
+    'svc.data.li1':      'Database design & RLS',
+    'svc.data.li2':      'Automated reporting',
+    'svc.qr.h3':         'Digital Menu & QR',
+    'svc.qr.p':          'QR menu system for restaurants and cafes. Turkish/English, real-time updates, admin panel included.',
+    'svc.qr.li1':        'QR code integration',
+    'svc.qr.li2':        'Dual language (TR/EN) support',
+    'svc.wa.h3':         'WhatsApp Bot',
+    'svc.wa.p':          'Your customers reach you on WhatsApp — order tracking, appointments, notifications, all automated.',
+    'svc.wa.li1':        '24/7 automated reply system',
+    'svc.wa.li2':        'Order & appointment management',
+    'svc.wa.li3':        'Bulk messaging & CRM integration',
+    // Projects
+    'proj.tag':           'Projects',
+    'proj.medek.type':    'Enterprise SaaS',
+    'proj.medek.h3':      'MEDEK — Process Management & Exam Analysis System',
+    'proj.medek.p':       'Bologna data fetching, question-based grade entry, and automated MEDEK report generation for vocational schools.',
+    'proj.medek.li1':     'Automated Bologna data fetch',
+    'proj.medek.li2':     'Question-based grade entry',
+    'proj.medek.li3':     'Automated MEDEK report generation',
+    'proj.medek.li4':     'Role-based access control',
+    'proj.kafe.type':     'Restaurant Software',
+    'proj.kafe.h3':       'Kafe QR — Digital Menu & Management System',
+    'proj.kafe.p':        'QR-based digital menu for cafes. Real-time updates, dual language support, and admin panel.',
+    'proj.kafe.li1':      'Instant access via QR code',
+    'proj.kafe.li2':      'Dual language support (TR/EN)',
+    'proj.kafe.li3':      'Real-time product updates',
+    'proj.kafe.li4':      'Visual media management',
+    'proj.guard.type':    'Artificial Intelligence',
+    'proj.guard.h3':      'AutoGuard — Autonomous AI Security System',
+    'proj.guard.dev':     'Active development — new features being added',
+    'proj.guard.p':       'RTX 5070 Ti based security camera system. Real-time detection with YOLO, automatic recording.',
+    'proj.guard.li1':     'Real-time object detection',
+    'proj.guard.li2':     'GPU optimization (RTX 5070 Ti)',
+    'proj.guard.li3':     'Automatic incident video recording',
+    'proj.guard.li4':     'AI threat analysis (in development)',
+    'proj.wip':           '🚧 Active Development',
+    // Contact
+    'contact.tag':        'Contact',
+    'contact.sub':        'Big or small, clear or vague — if you have an idea, our team listens and guides.',
+    'contact.phone.lbl':  'Phone',
+    'contact.phone.note': 'Available for your call',
+    'contact.email.lbl':  'Email',
+    'contact.email.note': 'We respond within 24 hours',
+    'contact.avail.title':'Accepting New Projects',
+    'contact.avail.sub':  'Our team is ready for new projects & partnerships',
+    'form.h3':            'Write to Us',
+    'form.name.lbl':      'Your Name',
+    'form.email.lbl':     'Email',
+    'form.subject.lbl':   'Subject',
+    'form.msg.lbl':       'Your Message',
+    'form.btn':           'Send',
+    'form.success':       '✅ Message received! Our team will get back to you shortly.',
+    'form.ph.name':       'Full Name',
+    'form.ph.email':      'example@email.com',
+    'form.ph.msg':        'What would you like to build? Tell us briefly...',
+    'form.opt.default':   'Select Subject',
+    'form.opt.web':       'Web Application',
+    'form.opt.corp':      'Enterprise Software',
+    'form.opt.ai':        'AI Project',
+    'form.opt.discord':   'Discord Bot',
+    'form.opt.wa':        'WhatsApp Bot',
+    'form.opt.other':     'Other',
+    // Footer
+    'footer.tagline':     '// software team · digital solutions',
+    'footer.copy':        '© 2026 GONICEON · All rights reserved',
+  }
+};
+
+// ── Switch Logic ──────────────────────────────
+const LANG_KEY = 'goniceon_lang';
+let currentLang = localStorage.getItem(LANG_KEY) || 'tr';
+
+function applyLang(lang) {
+  currentLang = lang;
+  localStorage.setItem(LANG_KEY, lang);
+  document.documentElement.lang = lang === 'tr' ? 'tr' : 'en';
+
+  const t = i18n[lang];
+
+  // text elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  // placeholder elements
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.dataset.i18nPh;
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+
+  // toggle button label
+  const btn = document.getElementById('lang-btn');
+  if (btn) btn.textContent = lang === 'tr' ? 'EN' : 'TR';
+}
+
+// Init & button
+document.addEventListener('DOMContentLoaded', () => {
+  applyLang(currentLang);
+  document.getElementById('lang-btn')?.addEventListener('click', () => {
+    applyLang(currentLang === 'tr' ? 'en' : 'tr');
+  });
+});
