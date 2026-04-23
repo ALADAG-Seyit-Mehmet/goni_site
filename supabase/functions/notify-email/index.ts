@@ -3,7 +3,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 // ── Config ──────────────────────────────────────────
 const RESEND_KEY = Deno.env.get('RESEND_API_KEY') ?? '';
 const TO_EMAIL   = 'seyit.mehmet.aladag.work@gmail.com';
-const FROM_EMAIL = 'GONICEON <onboarding@resend.dev>'; // Resend free tier
+const FROM_EMAIL = 'GONICEON <noreply@goniceon.com>';
 
 // ── Handler ─────────────────────────────────────────
 Deno.serve(async (req: Request) => {
