@@ -189,3 +189,109 @@ function _mailtoFallback({ name, email, subject, message }) {
 // ════════════════════════════════════════
 console.log('%cGONICEON.','color:#1B4FD8;font-size:2.2rem;font-weight:900;font-family:monospace');
 console.log('%c$ goniceon.dev — yazılım ekibi · dijital çözümler','color:#0EA5E9;font-size:.8rem;font-family:monospace');
+
+// ════════════════════════════════════════
+// DYNAMIC CONTENT (SUPABASE)
+// ════════════════════════════════════════
+
+async function loadDynamicContent() {
+  if (typeof sb === 'undefined') return;
+
+  try {
+    // Hizmetleri Çek
+    const { data: services, error: sErr } = await sb.from('services').select('*').order('order_index', { ascending: true });
+    if (!sErr && services && services.length > 0) {
+      const bentoContainer = document.getElementById('bento-container');
+      if (bentoContainer) {
+        bentoContainer.innerHTML = services.map(s => {
+          let classes = 'bcard';
+          if (s.width_class) classes += ` ${s.width_class}`;
+          if (s.is_popular && !s.is_whatsapp) classes += ' bcard-feat';
+          if (s.is_whatsapp) classes += ' bcard-wa';
+
+          let badgeHtml = '';
+          if (s.is_whatsapp) badgeHtml = `<span class="bc-badge bc-badge-wa">WhatsApp</span>`;
+          else if (s.is_popular) badgeHtml = `<span class="bc-badge bc-badge-mint">Popüler</span>`;
+
+          const featuresHtml = s.features ? s.features.map(f => `<li>${f}</li>`).join('') : '';
+
+          return `
+            <div class="${classes}">
+              ${badgeHtml}
+              <div class="bc-icon">${s.icon}</div>
+              <h3>${s.title}</h3>
+              <p>${s.description}</p>
+              ${featuresHtml ? `<ul class="bc-list">${featuresHtml}</ul>` : ''}
+            </div>
+          `;
+        }).join('');
+
+        // Re-apply scroll reveal classes for new elements
+        document.querySelectorAll('.bcard').forEach((c,i) => {
+          c.classList.add('reveal');
+          c.style.transitionDelay = (i * 0.055)+'s';
+          obs.observe(c);
+        });
+      }
+    }
+
+    // Projeleri Çek
+    const { data: projects, error: pErr } = await sb.from('projects').select('*').order('order_index', { ascending: true });
+    if (!pErr && projects && projects.length > 0) {
+      const projScroll = document.getElementById('proj-scroll');
+      if (projScroll) {
+        projScroll.innerHTML = projects.map((p, index) => {
+          const bgClass = p.internal_id ? `pv-bg-${p.internal_id.split('-')[1] || 'default'}` : 'pv-bg-medek';
+          const wipBadge = p.status === 'wip' ? `<div class="wip-badge">🚧 Aktif Geliştirme</div>` : '';
+          const devNote = p.status === 'wip' ? `<div class="dev-note"><span class="dev-dot"></span><span>Aktif geliştirme aşamasındadır — yeni özellikler ekleniyor</span></div>` : '';
+          const tagsHtml = p.tags ? p.tags.map(t => `<span>${t}</span>`).join('') : '';
+          const highlightsHtml = p.highlights ? p.highlights.map(h => `<div class="ph ${h.wip ? 'ph-wip' : ''}"><span>${h.wip ? '⟳' : '✓'}</span> <span>${h.text}</span></div>`).join('') : '';
+
+          return `
+            <article class="proj-card" id="${p.internal_id || 'proj-' + index}">
+              <div class="pv">
+                <div class="pv-bar">
+                  <div class="pv-dots2"><span class="pv-dot2 pv-r"></span><span class="pv-dot2 pv-y"></span><span class="pv-dot2 pv-g"></span></div>
+                  <div class="pv-url mono">${p.url_text || ''}</div>
+                </div>
+                <div class="pv-body ${bgClass}">
+                  <div class="pv-icon">${p.icon}</div>
+                  <div class="pv-title mono">${p.title.split('—')[0].trim()}</div>
+                  <div class="pv-sub">${p.title.split('—')[1] ? p.title.split('—')[1].trim() : ''}</div>
+                </div>
+              </div>
+              <div class="proj-info">
+                <div class="proj-num">— ${String(index + 1).padStart(2, '0')} / ${String(projects.length).padStart(2, '0')}</div>
+                <div class="proj-hrow">
+                  <div class="proj-type">${p.type}</div>
+                  ${wipBadge}
+                </div>
+                <h3>${p.title}</h3>
+                ${devNote}
+                ${p.impact_html ? `<div class="proj-impact">${p.impact_html}</div>` : ''}
+                <p>${p.description}</p>
+                ${tagsHtml ? `<div class="proj-tags">${tagsHtml}</div>` : ''}
+                ${highlightsHtml ? `<div class="proj-hl">${highlightsHtml}</div>` : ''}
+              </div>
+            </article>
+          `;
+        }).join('');
+        
+        // Dots Update
+        const dotsContainer = document.getElementById('proj-dots');
+        if (dotsContainer) {
+          dotsContainer.innerHTML = projects.map((_, i) => `<div class="proj-dot ${i === 0 ? 'active' : ''}"></div>`).join('');
+          // Rebind dots
+          const newDots = dotsContainer.querySelectorAll('.proj-dot');
+          newDots.forEach((d,i) => d.addEventListener('click', () => {
+            projScroll.scrollTo({ left: i * getCardW(), behavior:'smooth' });
+          }));
+        }
+      }
+    }
+  } catch (err) {
+    console.error("Dinamik içerik yüklenirken hata oluştu:", err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadDynamicContent);

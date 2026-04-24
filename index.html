@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
+  <link rel="icon" type="image/png" href="assets/favicon.png"/>
 </head>
 <body>
 
@@ -18,7 +19,7 @@
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#hero" class="brand" id="brand">
-      <span class="brand-g">G</span>ONICEON<span class="brand-dot">.</span>
+      <img src="assets/favicon.png" alt="G" class="brand-g-img">ONICEON<span class="brand-dot">.</span>
     </a>
     <ul class="nav-links" id="navlinks">
       <li><a href="#about"    class="nav-link" data-i18n="nav.about">Hakkımızda</a></li>
@@ -77,7 +78,7 @@
     <div class="profile-card">
 
       <div class="pc-top">
-          <div class="pc-avatar">G.</div>
+          <div class="pc-avatar" style="overflow: hidden;"><img src="assets/favicon.png" alt="GONICEON Logo" style="width: 100%; height: 100%; object-fit: cover;"></div>
           <div class="pc-info">
             <div class="pc-name">GONICEON</div>
             <div class="pc-handle mono" data-i18n="card.handle">@goniceon.dev · yazılım ekibi</div>
@@ -258,7 +259,7 @@
       <div class="sec-num sec-num-left" aria-hidden="true">02</div>
     </div>
 
-    <div class="bento">
+    <div class="bento" id="bento-container">
 
       <!-- Web — 3 wide, featured -->
       <div class="bcard bc-w3 bcard-feat" id="svc-web">
@@ -368,7 +369,7 @@
           <div class="pv">
             <div class="pv-bar">
               <div class="pv-dots2"><span class="pv-dot2 pv-r"></span><span class="pv-dot2 pv-y"></span><span class="pv-dot2 pv-g"></span></div>
-              <div class="pv-url mono">medek.goniceon.dev/dashboard</div>
+              <div class="pv-url mono">./medek_system_v1.0</div>
             </div>
             <div class="pv-body pv-bg-medek">
               <div class="pv-icon">🎓</div>
@@ -404,7 +405,7 @@
           <div class="pv">
             <div class="pv-bar">
               <div class="pv-dots2"><span class="pv-dot2 pv-r"></span><span class="pv-dot2 pv-y"></span><span class="pv-dot2 pv-g"></span></div>
-              <div class="pv-url mono">kafe.goniceon.dev/menu</div>
+              <div class="pv-url mono">./kafe_qr_menu</div>
             </div>
             <div class="pv-body pv-bg-kafe">
               <div class="pv-icon">☕</div>
@@ -439,7 +440,7 @@
           <div class="pv">
             <div class="pv-bar">
               <div class="pv-dots2"><span class="pv-dot2 pv-r"></span><span class="pv-dot2 pv-y"></span><span class="pv-dot2 pv-g"></span></div>
-              <div class="pv-url mono">autoguard.goniceon.dev — geliştiriliyor</div>
+              <div class="pv-url mono">./autoguard_ai_v2</div>
             </div>
             <div class="pv-body pv-bg-guard">
               <div class="pv-icon">🛡️</div>
@@ -563,7 +564,7 @@
   <div class="container">
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="#hero" class="brand"><span class="brand-g">G</span>ONICEON<span class="brand-dot">.</span></a>
+        <a href="#hero" class="brand"><img src="assets/favicon.png" alt="G" class="brand-g-img">ONICEON<span class="brand-dot">.</span></a>
         <p data-i18n="footer.tagline">// yazılım ekibi · dijital çözümler</p>
       </div>
       <div class="footer-links">
@@ -584,9 +585,186 @@
   </div>
 </footer>
 
+<!-- ═══ ADMIN OVERLAY ════════════════════════ -->
+<div id="admin-overlay" style="display: none;">
+  <!-- ── Login ── -->
+  <div id="login-screen" class="admin-panel-container">
+    <div class="login-box">
+      <div class="login-logo"><span>G</span>ONICEON<span class="login-logo-dot">.</span></div>
+      <div class="login-sub">// cms — yetkili erişim</div>
+      <label class="login-label" for="lemail">E-Posta</label>
+      <input class="login-input" type="email" id="lemail" placeholder="admin@goniceon.dev" autocomplete="username" />
+      <label class="login-label" for="lpass">Şifre</label>
+      <input class="login-input" type="password" id="lpass" placeholder="••••••••" autocomplete="current-password" />
+      <button class="login-btn" id="login-btn">Giriş Yap</button>
+      <div class="login-err" id="login-err">⛔ Hatalı giriş.</div>
+      <button id="close-admin-btn" style="margin-top: 15px; width: 100%; background: transparent; border: 1px solid var(--border); color: var(--t3); padding: 8px; border-radius: 8px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;">Geri Dön</button>
+    </div>
+  </div>
+
+  <!-- ── Dashboard ── -->
+  <div id="dashboard" class="admin-panel-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sb-brand">
+        <div class="sb-logo"><span>G</span>ONICEON CMS</div>
+        <div class="sb-tag">// v3.0 · supabase bağlı</div>
+      </div>
+      <nav class="sb-nav">
+        <div class="sb-section">Genel</div>
+        <div class="sb-item active" data-page="overview"><span class="sb-icon">📊</span> Genel Bakış</div>
+        <div class="sb-item" data-page="projects"><span class="sb-icon">🗂</span> Projeler</div>
+        <div class="sb-item" data-page="services"><span class="sb-icon">⚙️</span> Hizmetler</div>
+        <div class="sb-section">İçerik</div>
+        <div class="sb-item" data-page="about"><span class="sb-icon">👤</span> Hakkımızda</div>
+        <div class="sb-item" data-page="messages"><span class="sb-icon">✉️</span> Gelen Mesajlar</div>
+        <div class="sb-section">Sistem</div>
+        <div class="sb-item" data-page="logs"><span class="sb-icon">📋</span> Aktivite Log</div>
+      </nav>
+      <div class="sb-foot">
+        <div class="sb-user"><strong id="admin-user-email">admin@goniceon.dev</strong>@goniceon.dev · admin</div>
+        <div class="sb-logout" id="logout-btn">⬡ Çıkış Yap</div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <div class="top-bar">
+        <div class="top-title mono" id="page-title">Genel Bakış</div>
+        <div class="top-right">
+          <div class="badge-live"><span class="live-dot"></span>Site Aktif</div>
+        </div>
+      </div>
+      <div class="content">
+
+        <!-- ── PAGE: Overview ── -->
+        <div class="admin-page active" id="page-overview">
+          <div class="kpi-row">
+            <div class="kpi kpi-mint">
+              <div class="kpi-label">Tamamlanan Proje</div>
+              <div class="kpi-val" id="kpi-projects">-</div>
+              <div class="kpi-sub">Veritabanından</div>
+            </div>
+            <div class="kpi kpi-violet">
+              <div class="kpi-label">Aktif Hizmet</div>
+              <div class="kpi-val" id="kpi-services">-</div>
+              <div class="kpi-sub">Listede gösterilen</div>
+            </div>
+            <div class="kpi kpi-amber">
+              <div class="kpi-label">Yıl Deneyim</div>
+              <div class="kpi-val">5+</div>
+              <div class="kpi-sub">2020'den beri</div>
+            </div>
+          </div>
+
+          <div class="sec-head">
+            <h2>Son Aktivite</h2>
+          </div>
+          <div class="log-list" id="admin-log-list">
+            <!-- Logs injected via JS -->
+          </div>
+        </div>
+
+        <!-- ── PAGE: Projects ── -->
+        <div class="admin-page" id="page-projects">
+          <div class="sec-head">
+            <h2>Proje Listesi</h2>
+            <button class="add-btn" id="new-proj-btn">+ Yeni Proje</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Proje Adı</th>
+                  <th>Tür</th>
+                  <th>Durum</th>
+                  <th>Stack</th>
+                  <th>İşlem</th>
+                </tr>
+              </thead>
+              <tbody id="admin-proj-table">
+                <!-- Projects injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── PAGE: Services ── -->
+        <div class="admin-page" id="page-services">
+          <div class="sec-head">
+            <h2>Hizmet Listesi</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hizmet</th>
+                  <th>Durum</th>
+                  <th>Görünürlük</th>
+                </tr>
+              </thead>
+              <tbody id="admin-svc-table">
+                <!-- Services injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── PAGE: About ── -->
+        <div class="admin-page" id="page-about">
+          <div class="form-card">
+            <h3>👤 Hakkımda Metni</h3>
+            <p style="font-size: 0.8rem; color: var(--t2); margin-bottom: 15px;">Bu kısım ileride Supabase üzerinden düzenlenebilir hale getirilecek.</p>
+          </div>
+        </div>
+
+        <!-- ── PAGE: Messages ── -->
+        <div class="admin-page" id="page-messages">
+          <div class="sec-head">
+            <h2>Gelen Mesajlar</h2>
+            <div id="msg-count" style="font-size:.75rem;color:var(--t3);font-family:'JetBrains Mono',monospace">Yükleniyor...</div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tarih</th>
+                  <th>Ad Soyad</th>
+                  <th>E-Posta</th>
+                  <th>Konu</th>
+                  <th>Mesaj</th>
+                </tr>
+              </thead>
+              <tbody id="msg-table">
+                <tr>
+                  <td colspan="5" style="text-align:center;color:var(--t3);padding:32px;font-family:'JetBrains Mono',monospace;font-size:.78rem">Yükleniyor...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ── PAGE: Logs ── -->
+        <div class="admin-page" id="page-logs">
+          <div class="sec-head">
+            <h2>Aktivite Günlüğü</h2>
+          </div>
+          <div class="log-list">
+            <p style="font-size: 0.8rem; color: var(--t2); padding: 20px;">Tüm loglar genel bakış ekranındadır.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div id="admin-toast"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="supabase.js"></script>
 <script src="lang.js"></script>
 <script src="main.js"></script>
+<script src="admin.js"></script>
 </body>
 </html>
