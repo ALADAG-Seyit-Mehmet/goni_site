@@ -1,0 +1,21 @@
+TÜM HAKLARI SAKLIDIR (ALL RIGHTS RESERVED)
+
+Telif Hakkı (c) 2026 Seyit Mehmet Aladağ (GONICEON)
+
+1. WEB SİTESİ VE ARAYÜZ
+Bu web sitesinin kaynak kodları, arayüz tasarımı (UI/UX), grafik materyalleri, HTML/CSS/JS dosyaları ve metin içerikleri telif hakkı sahibinin önceden yazılı izni olmaksızın kopyalanamaz, çoğaltılamaz, dağıtılamaz, tersine mühendislik (reverse engineering) uygulanamaz veya herhangi bir formda kullanılamaz.
+
+2. SERGİLENEN PROJELER VE YAZILIMLAR
+Bu web sitesinde tanıtımı yapılan, sergilenen veya referans gösterilen tüm bağımsız projeler ve yazılımlar (örneğin; "MEDEK", "Kafe QR", "AutoGuard" ve ileride eklenecek diğer tüm projeler), bu projelerin algoritmaları, mimarileri, iş mantıkları ve fikirleri (Fikri Mülkiyet) yasal koruma altındadır. 
+
+Bu bağlamda sitede sergilenen projelere ait:
+- Fikirlerin, işleyiş mantıklarının veya arayüzlerinin ticari veya ticari olmayan amaçlarla "klonlanması",
+- Kaynak kodlarının, veritabanı şemalarının (Supabase vb. mimariler) veya entegre yapay zeka modellerinin (YOLO, TensorRT vb.) izinsiz kullanımı,
+- Projelerin isimleri, markaları veya konseptlerinin izin alınmadan başka platformlarda taklit edilmesi
+kesinlikle yasaktır.
+
+3. YAPTIRIMLAR
+Bu lisans koşullarının ihlali durumunda, 5846 sayılı Fikir ve Sanat Eserleri Kanunu ve ilgili uluslararası fikri mülkiyet sözleşmeleri kapsamında hukuki ve cezai haklar saklıdır. Gerekli durumlarda ihlali yapan kişi/kurumlara karşı, sunucu (hosting) sağlayıcıları üzerinden yayından kaldırma (DMCA) ve tazminat süreçleri başlatılacaktır.
+
+İletişim ve izin talepleri için:
+seyit.mehmet.aladag.work@gmail.com

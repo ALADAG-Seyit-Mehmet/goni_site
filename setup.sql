@@ -94,3 +94,55 @@ CREATE POLICY "Herkes mesaj gönderebilir" ON public.messages FOR INSERT WITH CH
 -- Ancak sadece admin olan kişi gelen mesajları GÖREBİLİR (select), GÜNCELLEYEBİLİR (update) veya SİLEBİLİR (delete)
 CREATE POLICY "Sadece admin mesajları okuyabilir" ON public.messages FOR SELECT USING (auth.role() = 'authenticated');
 CREATE POLICY "Sadece admin mesajları silebilir" ON public.messages FOR DELETE USING (auth.role() = 'authenticated');
+
+-- ==========================================
+-- 4. Site İçerikleri Tablosu (site_content)
+-- Hakkımızda bölümü vs. için key-value yapı
+-- ==========================================
+DROP TABLE IF EXISTS public.site_content CASCADE;
+
+CREATE TABLE public.site_content (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    content_key TEXT UNIQUE NOT NULL,
+    content_value TEXT NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE public.site_content ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Herkes site içeriğini okuyabilir" ON public.site_content FOR SELECT USING (true);
+CREATE POLICY "Sadece admin ekleyebilir" ON public.site_content FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Sadece admin güncelleyebilir" ON public.site_content FOR UPDATE USING (auth.role() = 'authenticated');
+CREATE POLICY "Sadece admin silebilir" ON public.site_content FOR DELETE USING (auth.role() = 'authenticated');
+
+-- Varsayılan hakkımızda verileri
+INSERT INTO public.site_content (content_key, content_value) VALUES
+('about_p1', 'Projelerin teknik süreçlerini baştan sona üstleniyor; analiz, mimari tasarım, geliştirme ve yayınlama aşamalarını uzman ekibimizle yönetiyoruz.'),
+('about_p2', 'Her projede bir proje sorumlusu, bir geliştirici ve bir kalite kontrol süreciyle çalışıyoruz — net iletişim, şeffaf ilerleme ve zamanında teslimat.'),
+('about_p3', 'Amacımız sadece çalışan bir yazılım teslim etmek değil; iş akışlarınızı hızlandıran, performanslı ve uzun vadeli sürdürülebilir dijital ürünler ortaya koymak.'),
+('about_focus_desc', 'Yüksek performanslı web uygulamaları, kurumsal yazılımlar ve otonom sistemler üzerine uzmanlaşmış ekibimizle çalışıyoruz. Modern mimariler ve sürdürülebilir altyapılar kuruyoruz.'),
+('about_years', '3+'),
+('about_projects_count', '10+'),
+('about_lines', '∞');
+
+-- ==========================================
+-- 5. Duyurular Tablosu (announcements)
+-- Sitede ziyaretçilere popup olarak gösterilir
+-- ==========================================
+DROP TABLE IF EXISTS public.announcements CASCADE;
+
+CREATE TABLE public.announcements (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    title TEXT NOT NULL,
+    message TEXT NOT NULL,
+    is_active BOOLEAN DEFAULT true,
+    badge_text TEXT DEFAULT '📢 Duyuru',
+    btn_text TEXT DEFAULT 'Anladım',
+    btn_url TEXT DEFAULT ''
+);
+
+ALTER TABLE public.announcements ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Herkes aktif duyuruları okuyabilir" ON public.announcements FOR SELECT USING (true);
+CREATE POLICY "Sadece admin duyuru ekleyebilir" ON public.announcements FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Sadece admin duyuru güncelleyebilir" ON public.announcements FOR UPDATE USING (auth.role() = 'authenticated');
+CREATE POLICY "Sadece admin duyuru silebilir" ON public.announcements FOR DELETE USING (auth.role() = 'authenticated');

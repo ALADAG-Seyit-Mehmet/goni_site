@@ -78,7 +78,7 @@
     <div class="profile-card">
 
       <div class="pc-top">
-          <div class="pc-avatar" style="overflow: hidden;"><img src="assets/favicon.png" alt="GONICEON Logo" style="width: 100%; height: 100%; object-fit: cover;"></div>
+          <div class="pc-avatar pc-avatar-img"><img src="assets/favicon.png" alt="GONICEON Logo" class="pc-avatar-photo"></div>
           <div class="pc-info">
             <div class="pc-name">GONICEON</div>
             <div class="pc-handle mono" data-i18n="card.handle">@goniceon.dev · yazılım ekibi</div>
@@ -586,7 +586,7 @@
 </footer>
 
 <!-- ═══ ADMIN OVERLAY ════════════════════════ -->
-<div id="admin-overlay" style="display: none;">
+<div id="admin-overlay" class="admin-overlay-hidden">
   <!-- ── Login ── -->
   <div id="login-screen" class="admin-panel-container">
     <div class="login-box">
@@ -598,17 +598,16 @@
       <input class="login-input" type="password" id="lpass" placeholder="••••••••" autocomplete="current-password" />
       <button class="login-btn" id="login-btn">Giriş Yap</button>
       <div class="login-err" id="login-err">⛔ Hatalı giriş.</div>
-      <button id="close-admin-btn" style="margin-top: 15px; width: 100%; background: transparent; border: 1px solid var(--border); color: var(--t3); padding: 8px; border-radius: 8px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;">Geri Dön</button>
+      <button id="close-admin-btn" class="admin-back-btn">Geri Dön</button>
     </div>
   </div>
 
   <!-- ── Dashboard ── -->
   <div id="dashboard" class="admin-panel-container">
-    <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sb-brand">
         <div class="sb-logo"><span>G</span>ONICEON CMS</div>
-        <div class="sb-tag">// v3.0 · supabase bağlı</div>
+        <div class="sb-tag">// v4.0 · supabase bağlı</div>
       </div>
       <nav class="sb-nav">
         <div class="sb-section">Genel</div>
@@ -617,148 +616,120 @@
         <div class="sb-item" data-page="services"><span class="sb-icon">⚙️</span> Hizmetler</div>
         <div class="sb-section">İçerik</div>
         <div class="sb-item" data-page="about"><span class="sb-icon">👤</span> Hakkımızda</div>
+        <div class="sb-item" data-page="announcements"><span class="sb-icon">📢</span> Duyurular</div>
         <div class="sb-item" data-page="messages"><span class="sb-icon">✉️</span> Gelen Mesajlar</div>
         <div class="sb-section">Sistem</div>
         <div class="sb-item" data-page="logs"><span class="sb-icon">📋</span> Aktivite Log</div>
       </nav>
       <div class="sb-foot">
-        <div class="sb-user"><strong id="admin-user-email">admin@goniceon.dev</strong>@goniceon.dev · admin</div>
+        <div class="sb-user"><strong id="admin-user-email">admin</strong>@goniceon.dev · admin</div>
         <div class="sb-logout" id="logout-btn">⬡ Çıkış Yap</div>
       </div>
     </aside>
 
-    <!-- Main -->
     <div class="main">
       <div class="top-bar">
         <div class="top-title mono" id="page-title">Genel Bakış</div>
-        <div class="top-right">
-          <div class="badge-live"><span class="live-dot"></span>Site Aktif</div>
-        </div>
+        <div class="top-right"><div class="badge-live"><span class="live-dot"></span>Site Aktif</div></div>
       </div>
       <div class="content">
 
-        <!-- ── PAGE: Overview ── -->
+        <!-- PAGE: Overview -->
         <div class="admin-page active" id="page-overview">
           <div class="kpi-row">
-            <div class="kpi kpi-mint">
-              <div class="kpi-label">Tamamlanan Proje</div>
-              <div class="kpi-val" id="kpi-projects">-</div>
-              <div class="kpi-sub">Veritabanından</div>
-            </div>
-            <div class="kpi kpi-violet">
-              <div class="kpi-label">Aktif Hizmet</div>
-              <div class="kpi-val" id="kpi-services">-</div>
-              <div class="kpi-sub">Listede gösterilen</div>
-            </div>
-            <div class="kpi kpi-amber">
-              <div class="kpi-label">Yıl Deneyim</div>
-              <div class="kpi-val">5+</div>
-              <div class="kpi-sub">2020'den beri</div>
-            </div>
+            <div class="kpi kpi-mint"><div class="kpi-label">Proje</div><div class="kpi-val" id="kpi-projects">-</div><div class="kpi-sub">Veritabanından</div></div>
+            <div class="kpi kpi-violet"><div class="kpi-label">Hizmet</div><div class="kpi-val" id="kpi-services">-</div><div class="kpi-sub">Aktif</div></div>
+            <div class="kpi kpi-amber"><div class="kpi-label">Mesaj</div><div class="kpi-val" id="kpi-messages">-</div><div class="kpi-sub">Gelen kutusu</div></div>
+            <div class="kpi kpi-green"><div class="kpi-label">Duyuru</div><div class="kpi-val" id="kpi-announcements">-</div><div class="kpi-sub">Aktif</div></div>
           </div>
-
-          <div class="sec-head">
-            <h2>Son Aktivite</h2>
-          </div>
-          <div class="log-list" id="admin-log-list">
-            <!-- Logs injected via JS -->
-          </div>
+          <div class="sec-head"><h2>Son Aktivite</h2></div>
+          <div class="log-list" id="admin-log-list"></div>
         </div>
 
-        <!-- ── PAGE: Projects ── -->
+        <!-- PAGE: Projects -->
         <div class="admin-page" id="page-projects">
-          <div class="sec-head">
-            <h2>Proje Listesi</h2>
-            <button class="add-btn" id="new-proj-btn">+ Yeni Proje</button>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Proje Adı</th>
-                  <th>Tür</th>
-                  <th>Durum</th>
-                  <th>Stack</th>
-                  <th>İşlem</th>
-                </tr>
-              </thead>
-              <tbody id="admin-proj-table">
-                <!-- Projects injected via JS -->
-              </tbody>
-            </table>
-          </div>
+          <div class="sec-head"><h2>Proje Listesi</h2><button class="add-btn" id="new-proj-btn">+ Yeni Proje</button></div>
+          <div class="table-wrap"><table><thead><tr><th>#</th><th>Proje Adı</th><th>Tür</th><th>Durum</th><th>Stack</th><th>İşlem</th></tr></thead><tbody id="admin-proj-table"></tbody></table></div>
         </div>
 
-        <!-- ── PAGE: Services ── -->
+        <!-- PAGE: Services -->
         <div class="admin-page" id="page-services">
-          <div class="sec-head">
-            <h2>Hizmet Listesi</h2>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Hizmet</th>
-                  <th>Durum</th>
-                  <th>Görünürlük</th>
-                </tr>
-              </thead>
-              <tbody id="admin-svc-table">
-                <!-- Services injected via JS -->
-              </tbody>
-            </table>
-          </div>
+          <div class="sec-head"><h2>Hizmet Listesi</h2><button class="add-btn" id="new-svc-btn">+ Yeni Hizmet</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Hizmet</th><th>Durum</th><th>Görünürlük</th><th>İşlem</th></tr></thead><tbody id="admin-svc-table"></tbody></table></div>
         </div>
 
-        <!-- ── PAGE: About ── -->
+        <!-- PAGE: About -->
         <div class="admin-page" id="page-about">
           <div class="form-card">
-            <h3>👤 Hakkımda Metni</h3>
-            <p style="font-size: 0.8rem; color: var(--t2); margin-bottom: 15px;">Bu kısım ileride Supabase üzerinden düzenlenebilir hale getirilecek.</p>
+            <h3>👤 Hakkımızda İçerikleri</h3>
+            <p class="admin-hint">Alanları düzenleyip "Kaydet" ile siteyi güncelleyin.</p>
+            <div class="admin-form-group"><label class="admin-label" for="about-p1">Paragraf 1</label><textarea class="admin-input" id="about-p1" rows="3"></textarea></div>
+            <div class="admin-form-group"><label class="admin-label" for="about-p2">Paragraf 2</label><textarea class="admin-input" id="about-p2" rows="3"></textarea></div>
+            <div class="admin-form-group"><label class="admin-label" for="about-p3">Paragraf 3</label><textarea class="admin-input" id="about-p3" rows="3"></textarea></div>
+            <div class="admin-form-group"><label class="admin-label" for="about-focus">Odak Alanı Açıklaması</label><textarea class="admin-input" id="about-focus" rows="3"></textarea></div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label" for="about-years">Yıl Deneyim</label><input class="admin-input" type="text" id="about-years" /></div>
+              <div class="admin-form-group"><label class="admin-label" for="about-proj-count">Proje Sayısı</label><input class="admin-input" type="text" id="about-proj-count" /></div>
+              <div class="admin-form-group"><label class="admin-label" for="about-lines">Satır Kod</label><input class="admin-input" type="text" id="about-lines" /></div>
+            </div>
+            <button class="login-btn admin-btn-mt" id="save-about-btn">💾 Kaydet</button>
           </div>
         </div>
 
-        <!-- ── PAGE: Messages ── -->
+        <!-- PAGE: Announcements -->
+        <div class="admin-page" id="page-announcements">
+          <div class="form-card">
+            <h3>📢 Yeni Duyuru Yayınla</h3>
+            <p class="admin-hint">Siteye ilk giren ziyaretçilere popup olarak gösterilir.</p>
+            <div class="admin-form-group"><label class="admin-label">Başlık</label><input class="admin-input" type="text" id="ann-title" placeholder="Örn: Yeni Hizmetimiz!" /></div>
+            <div class="admin-form-group"><label class="admin-label">Mesaj</label><textarea class="admin-input" id="ann-message" rows="3" placeholder="Duyuru içeriğini yazın..."></textarea></div>
+            <div class="admin-form-row">
+              <div class="admin-form-group"><label class="admin-label" for="ann-badge">Rozet</label><input class="admin-input" type="text" id="ann-badge" value="📢 Duyuru" /></div>
+              <div class="admin-form-group"><label class="admin-label" for="ann-btn-text">Buton Metni</label><input class="admin-input" type="text" id="ann-btn-text" value="Anladım" /></div>
+              <div class="admin-form-group"><label class="admin-label">Buton URL (opsiyonel)</label><input class="admin-input" type="text" id="ann-url" placeholder="#contact" /></div>
+            </div>
+            <button class="login-btn admin-btn-mt" id="publish-ann-btn">🚀 Duyuru Yayınla</button>
+          </div>
+          <div class="sec-head admin-sec-head-mt"><h2>Mevcut Duyurular</h2></div>
+          <div id="ann-list"></div>
+        </div>
+
+        <!-- PAGE: Messages -->
         <div class="admin-page" id="page-messages">
-          <div class="sec-head">
-            <h2>Gelen Mesajlar</h2>
-            <div id="msg-count" style="font-size:.75rem;color:var(--t3);font-family:'JetBrains Mono',monospace">Yükleniyor...</div>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Tarih</th>
-                  <th>Ad Soyad</th>
-                  <th>E-Posta</th>
-                  <th>Konu</th>
-                  <th>Mesaj</th>
-                </tr>
-              </thead>
-              <tbody id="msg-table">
-                <tr>
-                  <td colspan="5" style="text-align:center;color:var(--t3);padding:32px;font-family:'JetBrains Mono',monospace;font-size:.78rem">Yükleniyor...</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="sec-head"><h2>Gelen Mesajlar</h2><div id="msg-count" class="admin-hint mono">Yükleniyor...</div></div>
+          <div class="table-wrap"><table><thead><tr><th>Tarih</th><th>Ad Soyad</th><th>E-Posta</th><th>Konu</th><th>Mesaj</th><th>İşlem</th></tr></thead><tbody id="msg-table"><tr><td colspan="6" class="table-loading">Yükleniyor...</td></tr></tbody></table></div>
         </div>
 
-        <!-- ── PAGE: Logs ── -->
+        <!-- PAGE: Logs -->
         <div class="admin-page" id="page-logs">
-          <div class="sec-head">
-            <h2>Aktivite Günlüğü</h2>
-          </div>
-          <div class="log-list">
-            <p style="font-size: 0.8rem; color: var(--t2); padding: 20px;">Tüm loglar genel bakış ekranındadır.</p>
-          </div>
+          <div class="sec-head"><h2>Aktivite Günlüğü</h2></div>
+          <div class="log-list" id="admin-log-list-full"></div>
         </div>
 
       </div>
     </div>
   </div>
 </div>
+
+<!-- ═══ ADMIN MODAL ═══ -->
+<div id="admin-modal" class="adm-modal-overlay">
+  <div class="adm-modal">
+    <div class="adm-modal-head"><h3 id="modal-title">Düzenle</h3><button class="adm-modal-close" id="modal-close-btn">✕</button></div>
+    <div class="adm-modal-body" id="modal-body"></div>
+    <div class="adm-modal-foot"><button class="act-btn" id="modal-cancel-btn">İptal</button><button class="login-btn modal-save-btn" id="modal-save-btn">💾 Kaydet</button></div>
+  </div>
+</div>
+
+<!-- ═══ SITE ANNOUNCEMENT POPUP ═══ -->
+<div id="site-announcement" class="ann-popup-overlay">
+  <div class="ann-popup">
+    <div class="ann-popup-badge" id="ann-popup-badge">📢 Duyuru</div>
+    <h3 class="ann-popup-title" id="ann-popup-title"></h3>
+    <p class="ann-popup-msg" id="ann-popup-msg"></p>
+    <div class="ann-popup-actions"><button class="btn btn-primary ann-popup-btn" id="ann-popup-btn">Anladım</button></div>
+  </div>
+</div>
+
 <div id="admin-toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
