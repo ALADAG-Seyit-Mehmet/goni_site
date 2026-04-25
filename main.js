@@ -1,24 +1,15 @@
 // ════════════════════════════════════════
-// PROTECTION (AGGRESSIVE)
+// PROTECTION
 // ════════════════════════════════════════
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('keydown', e => {
   // F12
   if(e.key === 'F12') { e.preventDefault(); return; }
-  // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C / Ctrl+U
+  // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C
   if(e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c'].includes(e.key)) { e.preventDefault(); return; }
-  if(e.ctrlKey && ['U','u','S','s','P','p','C','c','X','x'].includes(e.key)) { e.preventDefault(); return; }
+  // Ctrl+U (view source)
+  if(e.ctrlKey && ['U','u'].includes(e.key)) { e.preventDefault(); return; }
 });
-// Prevent copy, cut, paste, drag
-document.addEventListener('copy', e => e.preventDefault());
-document.addEventListener('cut', e => e.preventDefault());
-document.addEventListener('paste', e => e.preventDefault());
-document.addEventListener('dragstart', e => e.preventDefault());
-
-// DevTools Debugger Trap (Freezes console if opened)
-setInterval(function() {
-  (function() { return false; }['constructor']('debugger')['call']());
-}, 1000);
 
 // ════════════════════════════════════════
 // NAVBAR
