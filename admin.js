@@ -11,19 +11,7 @@ const loginBtn = document.getElementById('login-btn');
 const loginErr = document.getElementById('login-err');
 
 // ── Router ──
-window.addEventListener('hashchange', checkHash);
-window.addEventListener('DOMContentLoaded', () => { checkHash(); loadAnnouncement(); });
-
-function checkHash() {
-  if (window.location.hash === '#goni') {
-    adminOverlay.classList.remove('admin-overlay-hidden');
-    document.body.style.overflow = 'hidden';
-    checkAuthStatus();
-  } else {
-    adminOverlay.classList.add('admin-overlay-hidden');
-    document.body.style.overflow = '';
-  }
-}
+window.addEventListener('DOMContentLoaded', () => { checkAuthStatus(); });
 
 // ── Auth ──
 async function checkAuthStatus() {
@@ -336,33 +324,6 @@ window.deleteAnn = async function(id) {
   await sb.from('announcements').delete().eq('id', id);
   toast('✅ Duyuru silindi'); fetchAndRenderAnnouncements();
 };
-
-// ── VISITOR ANNOUNCEMENT POPUP ──
-async function loadAnnouncement() {
-  if (typeof sb === 'undefined') return;
-  try {
-    const { data, error } = await sb.from('announcements').select('*').eq('is_active', true).order('created_at', { ascending: false }).limit(1);
-    if (error || !data || !data.length) return;
-    const ann = data[0];
-    const dismissed = sessionStorage.getItem('ann_dismissed_' + ann.id);
-    if (dismissed) return;
-    const overlay = document.getElementById('site-announcement');
-    document.getElementById('ann-popup-badge').textContent = ann.badge_text || '📢 Duyuru';
-    document.getElementById('ann-popup-title').textContent = ann.title;
-    document.getElementById('ann-popup-msg').textContent = ann.message;
-    const btn = document.getElementById('ann-popup-btn');
-    btn.textContent = ann.btn_text || 'Anladım';
-    setTimeout(() => { overlay.classList.add('visible'); }, 1500);
-    btn.onclick = () => {
-      overlay.classList.remove('visible');
-      sessionStorage.setItem('ann_dismissed_' + ann.id, '1');
-      if (ann.btn_url) { window.location.hash = ''; window.location.href = ann.btn_url; }
-    };
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) { overlay.classList.remove('visible'); sessionStorage.setItem('ann_dismissed_' + ann.id, '1'); }
-    });
-  } catch (err) { console.error('Duyuru popup:', err); }
-}
 
 // ── MODAL SYSTEM ──
 let _modalSaveFn = null;

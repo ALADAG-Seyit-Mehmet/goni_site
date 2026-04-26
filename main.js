@@ -289,9 +289,71 @@ async function loadDynamicContent() {
         }
       }
     }
+
+    // Site İçeriklerini Çek (Hakkımızda vb.)
+    const { data: siteContent, error: cErr } = await sb.from('site_content').select('*');
+    if (!cErr && siteContent && siteContent.length > 0) {
+      const map = {}; siteContent.forEach(r => map[r.content_key] = r.content_value);
+
+      // Çeviri objesini güncelle ki lang.js site_content verilerini TR için kullansın
+      if (typeof i18n !== 'undefined' && i18n.tr) {
+        if (map['about_p1']) i18n.tr['about.p1'] = map['about_p1'];
+        if (map['about_p2']) i18n.tr['about.p2'] = map['about_p2'];
+        if (map['about_p3']) i18n.tr['about.p3'] = map['about_p3'];
+        if (map['about_focus_desc']) i18n.tr['about.focus.desc'] = map['about_focus_desc'];
+        
+        // Sitedeki dilin TR olması durumunda anında yansımasını sağla
+        if (typeof applyLang === 'function' && typeof currentLang !== 'undefined') {
+          applyLang(currentLang);
+        }
+      }
+
+      // Rakamları güncelle (Çeviriye dahil değiller)
+      const anVals = document.querySelectorAll('.about-nums .an-val');
+      if (anVals.length >= 3) {
+        if (map['about_years']) anVals[0].textContent = map['about_years'];
+        if (map['about_projects_count']) anVals[1].textContent = map['about_projects_count'];
+        if (map['about_lines']) anVals[2].textContent = map['about_lines'];
+      }
+    }
+
   } catch (err) {
     console.error("Dinamik içerik yüklenirken hata oluştu:", err);
   }
 }
 
-document.addEventListener('DOMContentLoaded', loadDynamicContent);
+// ── VISITOR ANNOUNCEMENT POPUP ──
+async function loadAnnouncement() {
+  if (typeof sb === 'undefined') return;
+  try {
+    const { data, error } = await sb.from('announcements').select('*').eq('is_active', true).order('created_at', { ascending: false }).limit(1);
+    if (error || !data || !data.length) return;
+    const ann = data[0];
+    const dismissed = sessionStorage.getItem('ann_dismissed_' + ann.id);
+    if (dismissed) return;
+    const overlay = document.getElementById('site-announcement');
+    if (!overlay) return;
+    document.getElementById('ann-popup-badge').textContent = ann.badge_text || '📢 Duyuru';
+    document.getElementById('ann-popup-title').textContent = ann.title;
+    document.getElementById('ann-popup-msg').textContent = ann.message;
+    const btn = document.getElementById('ann-popup-btn');
+    btn.textContent = ann.btn_text || 'Anladım';
+    setTimeout(() => { overlay.classList.add('visible'); }, 1500);
+    btn.onclick = () => {
+      overlay.classList.remove('visible');
+      sessionStorage.setItem('ann_dismissed_' + ann.id, '1');
+      if (ann.btn_url) { window.location.hash = ''; window.location.href = ann.btn_url; }
+    };
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) { overlay.classList.remove('visible'); sessionStorage.setItem('ann_dismissed_' + ann.id, '1'); }
+    });
+  } catch (err) { console.error('Duyuru popup:', err); }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.location.hash === '#goni') {
+    window.location.replace('admin.html');
+  }
+  loadDynamicContent();
+  loadAnnouncement();
+});

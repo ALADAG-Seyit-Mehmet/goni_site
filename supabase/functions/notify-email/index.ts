@@ -1,5 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
+declare const Deno: any;
+
 // ── Config ──────────────────────────────────────────
 const RESEND_KEY = Deno.env.get('RESEND_API_KEY') ?? '';
 const TO_EMAIL   = 'seyit.mehmet.aladag.work@gmail.com';
@@ -15,7 +17,7 @@ Deno.serve(async (req: Request) => {
       return new Response('No record', { status: 400 });
     }
 
-    const html = `
+    const adminHtml = `
       <div style="font-family:sans-serif;max-width:560px;margin:auto">
         <div style="background:#09080F;padding:24px 32px;border-radius:12px 12px 0 0">
           <h1 style="color:#1EFFC2;font-size:1.4rem;margin:0;letter-spacing:-1px">
@@ -64,7 +66,28 @@ Deno.serve(async (req: Request) => {
       </div>
     `;
 
-    const res = await fetch('https://api.resend.com/emails', {
+    const autoReplyHtml = `
+      <div style="font-family:sans-serif;max-width:560px;margin:auto">
+        <div style="background:#09080F;padding:24px 32px;border-radius:12px 12px 0 0;text-align:center;">
+          <h1 style="color:#1EFFC2;font-size:1.4rem;margin:0;letter-spacing:-1px">
+            GONICEON<span style="color:#BF5AF2">.</span>
+          </h1>
+        </div>
+        <div style="border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;padding:28px 32px;color:#374151;line-height:1.6">
+          <p style="margin-top:0">Merhaba <strong>${r.name}</strong>,</p>
+          <p>Mesajınız tarafımıza başarıyla ulaştı. İlginiz için teşekkür ederiz!</p>
+          <p>Ekiplerimiz ilettiğiniz detayları en kısa sürede inceleyip sizinle bu e-posta adresi üzerinden iletişime geçecektir.</p>
+          <br/>
+          <p style="margin:0;color:#6b7280;font-size:0.9rem">İyi çalışmalar dileriz,</p>
+          <p style="margin-top:4px;font-weight:700;color:#09080F;font-size:1rem;">GONICEON Yazılım Ekibi</p>
+        </div>
+        <p style="text-align:center;color:#9ca3af;font-size:.72rem;margin-top:16px">
+          Bu e-posta otomatik olarak gönderilmiştir. Lütfen yanıtlamayınız.
+        </p>
+      </div>
+    `;
+
+    const adminPromise = fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -74,14 +97,32 @@ Deno.serve(async (req: Request) => {
         from: FROM_EMAIL,
         to:   TO_EMAIL,
         subject: `[GONICEON] ${r.subject ?? 'Yeni Mesaj'} — ${r.name}`,
-        html,
+        html: adminHtml,
       }),
     });
 
-    const data = await res.json();
-    return new Response(JSON.stringify(data), {
+    const userPromise = fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${RESEND_KEY}`,
+      },
+      body: JSON.stringify({
+        from: FROM_EMAIL,
+        to:   r.email,
+        subject: `Mesajınız Bize Ulaştı — GONICEON`,
+        html: autoReplyHtml,
+      }),
+    });
+
+    const [adminRes, userRes] = await Promise.all([adminPromise, userPromise]);
+
+    const adminData = await adminRes.json();
+    const userData = await userRes.json();
+
+    return new Response(JSON.stringify({ adminData, userData }), {
       headers: { 'Content-Type': 'application/json' },
-      status: res.status,
+      status: adminRes.status === 200 && userRes.status === 200 ? 200 : 500,
     });
 
   } catch (err) {
