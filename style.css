@@ -438,7 +438,7 @@ section{padding:100px 0}
 
 /* ══ CONTACT ════════════════════════════════ */
 #contact{background:var(--bg);position:relative;overflow:hidden}
-#contact::before{content:'';position:absolute;bottom:-300px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(27,79,216,.04),transparent 60%);pointer-events:none}
+#contact::before{content:'';position:absolute;bottom:-300px;left:50%;transform:translateX(-50%);width:800px;max-width:100vw;height:800px;background:radial-gradient(circle,rgba(27,79,216,.04),transparent 60%);pointer-events:none}
 
 .contact-layout{display:grid;grid-template-columns:320px 1fr;gap:40px;align-items:start}
 .contact-cards{display:flex;flex-direction:column;gap:12px}
