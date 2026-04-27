@@ -346,7 +346,6 @@ section{padding:100px 0}
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   -ms-overflow-style:none;
-  scrollbar-width:none;
   padding:8px 4px 28px;
 }
 .projects-scroll::-webkit-scrollbar{display:none}
@@ -383,6 +382,12 @@ section{padding:100px 0}
 .pv-bg-medek{background:linear-gradient(145deg,#040A1A,#060E30)}
 .pv-bg-kafe{background:linear-gradient(145deg,#040E06,#081A0A)}
 .pv-bg-guard{background:linear-gradient(145deg,#120507,#200808)}
+.pv-bg-sedirkon{background:linear-gradient(135deg,#1f1c18 0%,#3e3223 100%)}
+.sedirkon-title{color:#d4af37}
+.sedirkon-sq-1{background:rgba(212,175,55,0.2)}
+.sedirkon-sq-2{background:rgba(212,175,55,0.4)}
+.sedirkon-sq-3{background:rgba(212,175,55,0.1)}
+.sedirkon-sq-4{background:rgba(212,175,55,0.3)}
 .pv-icon{font-size:2.2rem;filter:drop-shadow(0 0 12px rgba(255,255,255,.3))}
 .pv-title{font-family:'JetBrains Mono',monospace;font-size:1.5rem;font-weight:700;background:linear-gradient(90deg,var(--violet),var(--mint));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px}
 .pv-sub{font-size:.62rem;text-transform:uppercase;letter-spacing:.14em;color:var(--t3);font-family:'JetBrains Mono',monospace}
@@ -607,6 +612,16 @@ section{padding:100px 0}
 /* ══════════════════════════════════════════════
    ADMIN PANEL STYLES
 ══════════════════════════════════════════════ */
+.admin-body {
+  background: var(--dark-bg);
+  margin: 0;
+  padding: 0;
+}
+.admin-overlay-layer {
+  position: relative;
+  z-index: 1;
+}
+
 #admin-overlay {
   position: fixed;
   inset: 0;

@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["ES2022", "DOM"]
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.spec.js"
+  ]
+}
