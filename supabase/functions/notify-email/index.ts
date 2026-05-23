@@ -4,7 +4,7 @@ declare const Deno: any;
 
 // ── Config ──────────────────────────────────────────
 const RESEND_KEY = Deno.env.get('RESEND_API_KEY') ?? '';
-const TO_EMAIL   = 'seyit.mehmet.aladag.work@gmail.com';
+const TO_EMAIL   = 'contact@goniceon.com';
 const FROM_EMAIL = 'GONICEON <noreply@goniceon.com>';
 
 // ── Handler ─────────────────────────────────────────

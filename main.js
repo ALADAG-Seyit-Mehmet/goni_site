@@ -180,7 +180,7 @@ async function handleSubmit(e) {
 function _mailtoFallback({ name, email, subject, message }) {
   const s = encodeURIComponent(`[GONICEON] ${subject} — ${name}`);
   const b = encodeURIComponent(`Merhaba Seyit Mehmet,\n\nAd: ${name}\nE-posta: ${email}\nKonu: ${subject}\n\n${message}`);
-  window.open(`mailto:seyit.mehmet.aladag.work@gmail.com?subject=${s}&body=${b}`, '_blank');
+  window.open(`mailto:contact@goniceon.com?subject=${s}&body=${b}`, '_blank');
 }
 
 
